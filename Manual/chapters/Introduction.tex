@@ -1,0 +1,32 @@
+\chapter{\sffamily Introduction}
+At the time of this package's creation, no easy-to-use TikZ package existed for generating high-quality, publication-ready RTL diagrams. While RTL diagrams can certainly be drawn using standard TikZ or \texttt{circuitikz} elements, anyone who has attempted this can confirm that it is a tedious and highly inconvenient process.
+
+During the preparation of a publication, I needed to draw an extensive RTL diagram of a complete DSP architecture. This necessity led to the creation of \texttt{SimpleRTL}. With \texttt{SimpleRTL}, creating modern, accurate, and high-quality RTL diagrams is done in the blink of an eye! 
+
+This package is intended primarily for FPGA engineers (I feel your pain!), ASIC designers, researchers, students, and basically anyone dealing with digital hardware visualization.
+In this documentation the elements of \texttt{SimpleRTL} and their usage are presented.
+
+SimpleRTL offers:
+\begin{itemize}
+    \item \textbf{Publication-Ready Aesthetics:}
+        Designed to mimic the clean, authoritative look of classic VLSI / digital design / computer architecture text books. It features subtle grouping colors, drop shadows for multi-instance blocks, and crisp orthogonal routing, while minimizing the amount code.
+    \item \textbf{Parametric Components:}
+        Multiplexers can be inferred automatically; the geometry is handled by the package.
+    \item \textbf{Smart Bus Routing:}
+        The Anchor points of the elements are preserved for easier signal / bus routing. Buses can also be created automatically. 
+    \item \textbf{Hardware Semantics:}
+        Includes standard representations for D-Flip-Flops (with clock/enable pins), Tri-State Buffers, ALUs, Shift Registers, and Register Files to name a few.
+\end{itemize}
+
+SimpleRTL has been successfully battle-tested in rigorous, multi-round peer-review environments (e.g., IEEE Transactions on Industrial Electronics). It is specifically optimized to:
+    \begin{itemize}
+        \item Unambiguously demonstrate the separation of data path and control logic.
+        \item Satisfy even the most highly specific demands for hardware critical path visualization.
+        \item Overwhelm any doubts regarding your architectural competence.
+    \end{itemize}
+
+Please consider this package an open invitation to share your suggestions, feature requests, and feedback. \texttt{SimpleRTL} is intended to be a community-driven, continuously evolving tool dedicated to raising the standard of digital design visualization.
+    
+\textit{Disclaimer: While \texttt{SimpleRTL} guarantees pristine hardware diagrams, it unfortunately cannot protect you from reviewers nitpicking your textual formulations.}
+
+ 

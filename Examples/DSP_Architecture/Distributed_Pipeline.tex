@@ -1,0 +1,43 @@
+\documentclass[border=10pt]{standalone}
+\usepackage[european]{circuitikz}
+\usepackage{../../Package/simpleRTL}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+
+\begin{document}
+
+\begin{circuitikz}[>=Stealth, thick, line width=1.25]
+
+    \draw[<-] (-2, 0.75) -- (-2, 2) node[left, rotate=90, xshift=0.7cm] {\sffamily\LARGE ...} node[left, above, rotate=90, xshift=0cm] {\sffamily\LARGE START}; 
+    \draw[] (2, 0.75) -- (2, 2) node[left, rotate=90, xshift=0.7cm] {\sffamily\LARGE ...} node[left, below, rotate=90, xshift=0cm] {\sffamily\LARGE BUSY}; 
+
+    \node[rtl_module, rtl_width=15cm, rtl_height=1.5cm] at (0,0) (macroController) {\sffamily\LARGE Distributed Pipeline Controller};
+    
+    \node[rtl_module={\sffamily\LARGE Clarke \\\sffamily\LARGE Transform}, rtl_width=3cm, rtl_height=10cm] at (-4, -8) () {};
+    \node[rtl_reg] at (-5, -6) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (-3, -6) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (-5, -11) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (-3, -11) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (-5, -8.5) () {\sffamily\LARGE Reg};
+
+    \node[rtl_module={\sffamily\LARGE Atan2}, rtl_width=3cm, rtl_height=10cm] at (4, -8) () {};
+    \node[rtl_reg] at (3, -6) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (5, -8.5) () {\sffamily\LARGE Reg};
+    \node[rtl_reg] at (3, -11) () {\sffamily\LARGE Reg};
+
+    \draw[->,rtl_bus, line width=3] (-2.25,-6) -- (2.25,-6)node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{D_\alpha}$};
+    \draw[->,rtl_bus, line width=3] (-2.25,-11) -- (2.25,-11) node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{D_\beta}$};
+
+    \draw[->,rtl_bus, line width=3] (-8,-6) -- (-5.75,-6) node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{D_u}$};
+    \draw[->,rtl_bus, line width=3] (-8,-8.5) -- (-5.75,-8.5) node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{D_v}$};
+    \draw[->,rtl_bus, line width=3] (-8,-11) -- (-5.75,-11) node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{D_w}$};
+
+    \draw[->,rtl_bus, line width=3] (5.75,-8.5) -- (8,-8.5) node[above, midway, yshift=0.15cm]{\sffamily\LARGE $\mathsf{\phi}$};
+
+    \draw[->] (-4.6, -0.75)node[left, above, rotate=90, xshift=-1.15cm] {\sffamily\LARGE START}  -- (-4.6, -3);
+    \draw[->] (-3.4, -3) -- (-3.4, -0.75)node[left, below, rotate=90, xshift=-1.15cm] {\sffamily\LARGE BUSY};
+
+    \draw[->] (3.4, -0.75) node[left, above, rotate=90, xshift=-1.15cm] {\sffamily\LARGE START} -- (3.4, -3);
+    \draw[->] (4.6, -3) -- (4.6, -0.75) node[left, below, rotate=90, xshift=-1.15cm] {\sffamily\LARGE BUSY};
+
+\end{circuitikz}
+\end{document}

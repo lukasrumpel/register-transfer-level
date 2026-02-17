@@ -1,0 +1,68 @@
+\documentclass{book}
+\usepackage[european]{circuitikz}
+\usepackage{../Package/SimpleRTL}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+%\usepackage[ngerman]{babel}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage[sf]{caption}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{theorem}
+\usepackage{icomma}
+\usepackage[pdfpagelabels, bookmarksnumbered=true, bookmarksopen=true, bookmarksopenlevel=1, pdftitle={ xxx}, pdfauthor={ xxx }, pdfsubject={Anleitung}, pdfstartview=FitV, plainpages=false]{hyperref}
+\usepackage{pdfpages}
+\usepackage[babel]{csquotes}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{fancybox}
+\usepackage{svn-multi}
+\usepackage{scrlayer-scrpage}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{setspace}
+\usepackage{ifthen}
+\usepackage{titlesec}
+\usepackage{makeidx}
+\usepackage{geometry}
+\usepackage[backend=biber]{biblatex}
+
+\begin{document}
+    \sffamily
+    \begin{titlepage}
+        \centering
+        \vspace{2cm}
+        \Huge\texttt{SimpleRTL}\\
+        \Large publication quality RTL diagrams\\
+        \vspace{4cm}
+        \begin{center}
+            \begin{tikzpicture}[>=Stealth, thick]
+                \createMux[rtl_height=3.5cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}}
+                \draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
+                \draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
+                \draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {Input 3};
+                \draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {Input 4};
+                \draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {Input 5};
+                \draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {Input 6};
+                \draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {Input 7};
+                \draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {Input 8};
+                \draw[->] (muxTitle-out) -- ++(1, 0) node[right] {Output};
+                \draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm]{Sel} -- +(-1.5, -1)  (muxTitle-sel);
+            \end{tikzpicture}
+        \end{center}
+        \vspace{4cm}
+        Lukas Rumpel\\
+        2026 \\
+        under MIT license
+    \end{titlepage}
+
+    \tableofcontents 
+
+    \include{chapters/Introduction}
+\end{document}
