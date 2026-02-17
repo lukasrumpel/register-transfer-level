@@ -10,7 +10,7 @@ This package is intended primarily for FPGA engineers (I feel your pain!), ASIC 
 
 ## Features
 
-* **Publication-Ready Aesthetics:** Designed to mimic the clean, authoritative look of classic VLSI / digital design / computer architecture text books. It features subtle grouping colors, drop shadows for multi-instance blocks, and crisp orthogonal routing, while minimizing the amount code.
+* **Publication-Ready Aesthetics:** Designed to mimic the clean, authoritative look of classic VLSI / digital design / computer architecture text books. It features subtle grouping colors, drop shadows for multi-instance blocks, and crisp orthogonal routing, while minimizing the amount of code needed.
 * **Parametric Components:** Multiplexers can be inferred automatically; the geometry is handled by the package.
 * **Smart Bus Routing:** The Anchor points of the elements are preserved for easier signal / bus routing. Buses can also be created automatically.
 * **Hardware Semantics:** Includes standard representations for D-Flip-Flops (with clock/enable pins), Tri-State Buffers, ALUs, Shift Registers, and Register Files to name a few.
