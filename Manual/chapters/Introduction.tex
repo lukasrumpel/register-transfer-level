@@ -29,4 +29,25 @@ Please consider this package an open invitation to share your suggestions, featu
     
 \textit{Disclaimer: While \texttt{SimpleRTL} guarantees pristine hardware diagrams, it unfortunately cannot protect you from reviewers nitpicking your textual formulations.}
 
+\section{Common Attributes and Sizing}
+
+To ensure visual consistency across complex RTL diagrams, \texttt{SimpleRTL} provides a unified set of sizing attributes. While standard TikZ parameters remain functional, using the dedicated \texttt{rtl\_*} keys is highly recommended to maintain a clean and semantic naming scheme throughout your source code.
+
+\subsection*{Global Dimension Keys}
+The following attributes allow for precise control over the geometric properties of RTL elements:
+
+\begin{itemize}
+    \item \textbf{\texttt{rtl\_width / rtl\_height}}: Overrides the default dimensions for rectangular blocks like registers (\texttt{rtl\_reg}) and custom modules.
+    \item \textbf{\texttt{rtl\_mux\_width / rtl\_mux\_height}}: Tailored specifically for the trapezoidal geometry of Multiplexers and Demultiplexers.
+    \item \textbf{\texttt{rtl\_size}}: Defines the diameter for circular arithmetical operators (e.g., adders or multipliers).
+\end{itemize}
+
+\subsection*{The Anchor Convention}
+Connectivity is the backbone of any RTL diagram. \texttt{SimpleRTL} follows a predictable, hyphenated naming convention to make signal routing intuitive:
+
+\begin{center}
+    \texttt{\{node\_name\}\textcolor{red}{-}\{anchor\_identifier\}}
+\end{center}
+
+For instance, a register named \texttt{RegA} provides anchors such as \texttt{RegA-CLK} or \texttt{RegA-D}. This systematic approach ensures that you spend less time looking up documentation and more time routing your data path.
  

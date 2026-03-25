@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Arithmetical Operators}
+
+    \subsection{\sffamily Description}
+        The \texttt{rtl\_op} element is used to represent mathematical operations within the data path, such as addition, subtraction, or multiplication. It features a circular shape with a clean white fill and a drop shadow, making it stand out as a functional node.
+        
+    \subsection{\sffamily Attributes}
+        The size of the operator circle can be adjusted to accommodate longer symbols or more complex arithmetic identifiers.
+
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{rtl\_size} & Sets the diameter of the circular operator (Default: 0.8cm). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all degree-based anchors on the circle.
+        \end{itemize}
+
+    \subsection{\sffamily Listing}
+\begin{RTLexample}[Arithmetical Ops]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    \node[rtl_op] (Add) at (0,0) {+};
+    \node[rtl_op, rtl_size=1.2cm] (Mult) at (2.5,0) {$\times$};
+    
+    \draw[->] (Add) -- (Mult);
+    \draw[<-] (Add.west) -- ++(-0.6,0) node[left] {A};
+    \draw[<-] (Add.north) -- ++(0,0.6) node[above] {B};
+\end{tikzpicture}
+\end{RTLexample}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Shifters}
+
+    \subsection{\sffamily Description}
+        The \texttt{rtl\_shifter} element represents bit-shifting operations (e.g., LSL, LSR, ASR). Visually, it is distinguished by a rectangular shape with rounded corners and a distinct orange tint, indicating a modification of the bus structure or bit positions.
+
+    \subsection{\sffamily Attributes}
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{rtl\_width} & Sets the minimum width (Default: 1.0cm). \\
+            \texttt{rtl\_height} & Sets the minimum height (Default: 1.0cm). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: All rectangular anchors (\texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, etc.).
+        \end{itemize}
+
+    \subsection{\sffamily Listing}
+\begin{RTLexample}[Shifter Element]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    \node[rtl_shifter] (S1) at (0,0) {$\ll 2$};
+    \node[rtl_shifter, rtl_width=2cm, right=1.5cm of S1] (S2) {LSR};
+    
+    \draw[->] (S1) -- (S2);
+    \draw[<-] (S1.west) -- ++(-0.6,0);
+    \draw[->] (S2.east) -- ++(0.6,0);
+\end{tikzpicture}
+\end{RTLexample}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Boolean Operations}
+
+    \subsection{\sffamily Description}
+        Complex logic gates or bitwise operations that do not fall into standard arithmetic or shifting categories are represented by the \texttt{rtl\_boolean} style. These elements use a rounded rectangle with a violet background to signify logical transformation of signals.
+
+    \subsection{\sffamily Attributes}
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{rtl\_width} & Sets the minimum width (Default: 1.0cm). \\
+            \texttt{rtl\_height} & Sets the minimum height (Default: 1.0cm). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
+        \end{itemize}
+
+    \subsection{\sffamily Listing}
+\begin{RTLexample}[Boolean Logic]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    \node[rtl_boolean] (Log) at (0,0) {XOR};
+    
+    \draw[<-] (Log.west) ++(0,0.3) -- ++(-0.6,0);
+    \draw[<-] (Log.west) ++(0,-0.3) -- ++(-0.6,0);
+    \draw[->] (Log.east) -- ++(0.6,0);
+\end{tikzpicture}
+\end{RTLexample}

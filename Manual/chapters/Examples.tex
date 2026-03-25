@@ -1,0 +1,49 @@
+\chapter{\sffamily Examples}
+
+\section{\sffamily Simple Multiplexer}
+
+%Ruler:
+%-------------------------------------------
+\begin{RTLexample}[8-to-1 Multiplexer]
+\begin{tikzpicture}[>=Stealth, thick, 
+scale=0.8]
+    \createMux[rtl_height=3cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}};
+        \draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
+        \draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
+        \draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {Input 3};
+        \draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {Input 4};
+        \draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {Input 5};
+        \draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {Input 6};
+        \draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {Input 7};
+        \draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {Input 8};
+        \draw[->] (muxTitle-out) -- ++(1, 0) node[right] {Output};
+    \draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm] {Sel} -- +(-1.5, -1)  (muxTitle-sel);
+\end{tikzpicture}
+\end{RTLexample}
+
+\section{\sffamily Accumulator}
+
+\begin{RTLexample}[Accumulator Data Path]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    % 1. Functional Elements
+    \node[rtl_op] (Add) at (0,0) {+};
+    \node[rtl_reg_clk, right=2cm of Add] (Reg) {Acc};
+    
+    % 2. Input Data Path
+    \draw[<-, rtl_bus={16}] (Add.north) -- ++(0, 1.2) -- ++(-2, 0) node[left] {Data\_In};
+    
+    % 3. Forward Path (Adder to Register)
+    \draw[->, rtl_bus={16}] (Add.east) -- (Reg.west) node[midway, above] {sum};
+    
+    % 4. Feedback Path (Register to Adder)
+    % We use routeU: Start at east, move 1cm out, 2.5cm down, and end at Add.south
+    \routeU[->, rtl_bus={16}, blue]{Reg.east}{1}{-2.5}{Add.west};
+    
+    % 5. Control Signals
+    \draw[<-] (Reg-CLK) -- ++(-1, 0) node[below] {clk};
+    
+    % 6. Output
+    \node[circ, right=0.75 of Reg.east] (n1){};
+    \draw[->, rtl_bus={16}] (n1) -- ++(2,0) node[right] {Data\_Out};
+\end{tikzpicture}
+\end{RTLexample}

@@ -32,6 +32,33 @@
 \usepackage{makeidx}
 \usepackage{geometry}
 \usepackage[backend=biber]{biblatex}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbuselibrary{listings, skins} % WICHTIG: 'skins' hinzugefügt für bicolor!
+\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+\usetikzlibrary{babel}
+
+\newtcblisting{RTLexample}[1][]{
+    width=\textwidth,           % <-- GEÄNDERT: \textwidth statt \paperwidth nutzen
+    colback=gray!5,             
+    colframe=blue!40!black,     
+    title={\textbf{Example:} #1}, 
+    listing and text,           
+    bicolor,                    
+    colbacklower=white,         
+    fonttitle=\sffamily\bfseries,
+    breakable,                  
+    listing options={
+        language=TeX,
+        basicstyle=\ttfamily\small,
+        keywordstyle=\color{blue},
+        commentstyle=\color{green!50!black},
+        breaklines=true
+    }
+}
 
 \begin{document}
     \sffamily
@@ -65,4 +92,10 @@
     \tableofcontents 
 
     \include{chapters/Introduction}
+    \include{chapters/Memories}
+    \include{chapters/Structural}
+    \include{chapters/Combinatorial}
+    \include{chapters/Operators}
+    \include{chapters/Signals_Routing_Manipulation}
+    \include{chapters/Examples}
 \end{document}

@@ -25,7 +25,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{SimpleRTL}[2025 v1.0 Custom RTL TikZ Library]
+\ProvidesPackage{SimpleRTL}[2026 v1.0 Custom RTL TikZ Library]
 
 \RequirePackage[european]{circuitikz}
 \RequirePackage{graphicx}
@@ -93,7 +93,7 @@
         append after command={
             \pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
             ($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
-            ($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+            ($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
             ($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
             \pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
         }
@@ -154,7 +154,7 @@
         rtl_has_clock,
         append after command={
             \pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-            ($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+            ($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
             \pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
         }
     },

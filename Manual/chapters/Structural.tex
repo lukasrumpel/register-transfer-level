@@ -1,0 +1,131 @@
+\chapter{\sffamily  Structural Elements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Custom Module (Black Box)}
+
+    \subsection{\sffamily Description}
+        The \texttt{rtl\_module} element is designed to represent higher-level functional units or "black boxes" within a digital system. It is based on the \texttt{rtl\_base\_box} but features a distinct green tint and a dedicated label at the top. 
+        This element is ideal for hierarchical diagrams where the internal logic of a component is abstracted away. The label is automatically positioned at the \texttt{north} edge with a slight offset to prevent overlap with incoming signals.
+
+    \subsection{\sffamily Attributes}
+        The module's name is passed as a mandatory argument to the style. Dimensioning follows the standard package scheme:
+
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{rtl\_module=\{Name\}} & Sets the identifying label at the top of the module. \\
+            \texttt{rtl\_width} & Sets the minimum width (Default: 1.5cm). \\
+            \texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors.
+            \item \textbf{Note}: Use the \texttt{north} anchor with caution, as it shares space with the module label.
+        \end{itemize}
+
+    \subsection{\sffamily Listing}
+        The following example demonstrates a scaled module with a custom name.
+
+\begin{RTLexample}[Custom Module]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    % Module with specific name and dimensions
+    \node[rtl_module={Control\_Unit}, rtl_width=3cm, rtl_height=2.5cm] (Mod1) at (0,0) {};
+    
+    % Connections
+    \draw[<-] (Mod1.west) ++(0,0.5) -- ++(-1,0) node[left] {instr\_in};
+    \draw[->] (Mod1.east) -- ++(1,0) node[right] {ctrl\_out};
+    \draw[<-] (Mod1.south) -- ++(0,-0.7) node[below] {reset};
+\end{tikzpicture}
+\end{RTLexample}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Constant Value}
+
+    \subsection{\sffamily Description}
+        The \texttt{rtl\_const} element is used to represent static signal values, parameters, or hardcoded addresses. Its distinct purple color serves as a visual cue that the signal originating from this block is non-volatile and fixed during the design's operation. 
+        Internally, it behaves like an asynchronous register without any clock or control logic.
+
+    \subsection{\sffamily Attributes}
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{rtl\_width} & Sets the minimum width (Default: 1.5cm). \\
+            \texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
+        \end{itemize}
+
+    \subsection{\sffamily Listing}
+        Constants are typically used to feed fixed values into operators or modules.
+
+\begin{RTLexample}[Constant Value]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    % Constant value block
+    \node[rtl_const] (C1) at (0,0) {8'hFF};
+    
+    % Example of signal origin
+    \draw[->, rtl_bus={8}] (C1.east) -- ++(1.5,0) node[right] {MASK};
+    
+\end{tikzpicture}
+\end{RTLexample}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\sffamily Cutset Decoration}
+
+    \subsection{\sffamily Description}
+        The \texttt{is\_cutset} style is a specialized visual decorator used to mark timing boundaries, pipelining stages, or logic cuts within a diagram. Instead of being a standalone node, it is applied as an attribute to any existing rectangular element (like registers or modules).
+        
+        The style automatically draws a dashed vertical line through the center of the component, extending slightly (5\%) beyond the \texttt{north} and \texttt{south} boundaries. By utilizing the \texttt{foreground} PGF layer, the cutset remains clearly visible even when applied to filled or shaded elements.
+
+    \subsection{\sffamily Attributes}
+        The style accepts an optional argument to customize the appearance of the dashed line, such as changing its color or thickness.
+
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Attribute} & \textbf{Effect} \\
+            \midrule
+            \texttt{is\_cutset=\{draw\_options\}} & Activates the cutset line. The argument allows standard TikZ draw options (Default: \texttt{dashed, thick}). \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsection{\sffamily Anchors}
+            \begin{itemize}
+                \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
+            \end{itemize}
+
+    \subsection{\sffamily Listing}
+        The following example shows how to mark a timing boundary across a series of registers.
+
+\begin{RTLexample}[Logic Cutset]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    % Sequence of registers
+    \node[rtl_module={Mod A}] (M1) at (0,0) {};
+    
+    % Register with a red cutset line
+    \node[rtl_reg, is_cutset={red}, right=2cm of M1] (R1) {Reg};
+    
+    \node[rtl_module={Mod B}, right=2cm of R1] (M2) {};
+
+    % Signals
+    \draw[->] (M1) -- (R1);
+    \draw[->] (R1) -- (M2);
+
+    % Label for the cutset
+    \node[red, font=\sffamily\small] at (R1.north) [yshift=0.5cm] {Timing Cut};
+\end{tikzpicture}
+\end{RTLexample}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
