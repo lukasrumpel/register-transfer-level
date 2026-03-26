@@ -1,0 +1,22 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+\usepackage{../../simplertl}
+
+\begin{document}
+
+\begin{tikzpicture}[>=Stealth, thick,
+		scale=0.8]
+	\createMux[rtl_height=3cm]{muxTitle}(0,0){{\sffamily \Large 000}, {\sffamily \Large 001}, {\sffamily \Large 010}, {\sffamily \Large 011}, {\sffamily \Large 100}, {\sffamily \Large 101}, {\sffamily \Large 110}, {\sffamily\Large 111}};
+	\draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {\sffamily Input 1};
+	\draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {\sffamily Input 2};
+	\draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {\sffamily Input 3};
+	\draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {\sffamily Input 4};
+	\draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {\sffamily Input 5};
+	\draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {\sffamily Input 6};
+	\draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {\sffamily Input 7};
+	\draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {\sffamily Input 8};
+	\draw[->] (muxTitle-out) -- ++(1, 0) node[right] {\sffamily Output};
+	\draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm] {\sffamily Sel} -- +(-1.5, -1)  (muxTitle-sel);
+\end{tikzpicture}
+
+\end{document}
