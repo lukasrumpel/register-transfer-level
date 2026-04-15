@@ -232,17 +232,29 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% bus
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	rtl_bus/.style={
-			line width=2,
-			decoration={
-					markings,
-					mark=at position 0.5 with {
-							\node[font=\sffamily\large, sloped, inner sep=0pt] {/};
-							\node[font=\sffamily, below=2pt] {#1};
-						}
-				},
-			postaction={decorate}
-		},
+    rtl_bus/.style={
+        line width=2,
+        decoration={
+            markings,
+            mark=at position 0.5 with {
+                \node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+                \node[font=\sffamily, below=2pt] {#1};
+            }
+        },
+        postaction={decorate}
+    },
+	rtl_bus/.default={},
+	rtl_bus_flex/.style args={#1,#2}{
+        line width=2,
+        decoration={
+            markings,
+            mark=at position {#2} with {
+                \node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+                \node[font=\sffamily, below=2pt] {#1};
+            }
+        },
+        postaction={decorate}
+    },
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% boolean operations
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
