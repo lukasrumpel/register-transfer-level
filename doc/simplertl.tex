@@ -45,11 +45,11 @@
 % ------------------------------------------------------------------------------
 % Color Theme
 % ------------------------------------------------------------------------------
-\definecolor{main}{RGB}{80, 110, 90}        % Waldgrün
-\definecolor{textC}{RGB}{20, 20, 15}        % NEU: Nahezu Schwarz für Schärfe
-\definecolor{textCGray}{RGB}{140, 140, 135} % Steingrau
-\definecolor{alert}{RGB}{170, 105, 95}      % Ziegelrot
-\definecolor{example}{RGB}{115, 140, 160}   % Schieferblau
+\definecolor{main}{RGB}{80, 110, 90}      
+\definecolor{textC}{RGB}{20, 20, 15}      
+\definecolor{textCGray}{RGB}{140, 140, 135} 
+\definecolor{alert}{RGB}{170, 105, 95}     
+\definecolor{example}{RGB}{115, 140, 160}  
 
 \usepackage[colorlinks=true, linkcolor=main, citecolor=example, urlcolor=alert]{hyperref}
 \geometry{left=2.5cm, textwidth=16cm, marginpar=3cm}
@@ -93,19 +93,18 @@
 % ------------------------------------------------------------------------------
 % CUSTOM BLOCKS (ALERT & EXAMPLE)
 % ------------------------------------------------------------------------------
-% Alert-Block (Ziegelrot für kritische Hardware-Warnungen)
+
 \newtcolorbox{alertblock}[1][Achtung]{
-    colback=white,          % Hintergrundfarbe (weiß für sauberen Druck)
-    colframe=alert,         % Rahmen- und Titelfarbe (Ziegelrot)
-    coltext=textC,          % Textfarbe (Anthrazit)
-    fonttitle=\bfseries,    % Titelschrift fett
-    title=#1,               % Dynamischer Titel (Standard: "Achtung")
-    arc=0pt,                % Scharfe Kanten (Industrie-Look)
-    boxrule=1pt,            % Rahmendicke
-    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm % Innenabstände
+    colback=white,          
+    colframe=alert,         
+    coltext=textC,          
+    fonttitle=\bfseries,    
+    title=#1,               
+    arc=0pt,                
+    boxrule=1pt,           
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm
 }
 
-% Example-Block (Schieferblau für Mathe & Theorie)
 \newtcolorbox{exampleblock}[1][Beispiel]{
     colback=white,
     colframe=example,       
@@ -117,28 +116,26 @@
     left=1.5mm, right=1.5mm, top=1mm, bottom=1mm
 }
 
-% ... (Präambel bleibt gleich) ...
-
 \newtcblisting{RTLexample}[1][]{
     width=\textwidth,           
-    colback=white,              % Weiß für sauberen Druck
-    colframe=example,           % Schieferblau für den Rahmen
-    coltext=textC,              % Dunkles Anthrazit für den Text
+    colback=white,
+    colframe=example,
+    coltext=textC,
     title={\textbf{Example:} #1}, 
     listing and text,           
     bicolor,                    
     colbacklower=white,         
     fonttitle=\sffamily\bfseries,
-    arc=0pt,                    % Scharfe Kanten für den Industrie-Look
-    boxrule=1pt,                % Konsistente Rahmendicke
+    arc=0pt,
+    boxrule=1pt,
     breakable,                  
     listing options={
         language=TeX,
         basicstyle=\ttfamily\small\color{textC},
-        keywordstyle=\bfseries\color{main},       % Waldgrün für Keywords
-        commentstyle=\itshape\color{textCGray},   % Steingrau für Kommentare
-        stringstyle=\color{alert},                % Ziegelrot für Strings
-        identifierstyle=\color{example},          % Schieferblau für Identifier
+        keywordstyle=\bfseries\color{main},
+        commentstyle=\itshape\color{textCGray},
+        stringstyle=\color{alert},
+        identifierstyle=\color{example},
         breaklines=true
     }
 }
@@ -182,9 +179,9 @@
 
     \cleardoublepage
     \newcounter{savepage}
-    \setcounter{savepage}{\value{page}} % Wir merken uns die aktuelle Seite
+    \setcounter{savepage}{\value{page}}
     \pagenumbering{arabic}
-    \setcounter{page}{\value{savepage}} % Wir setzen den Zähler wieder ein (z.B. 12)
+    \setcounter{page}{\value{savepage}}
     \setcounter{section}{0}
     \setcounter{table}{0} 
     \setcounter{figure}{0}
