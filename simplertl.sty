@@ -2,7 +2,7 @@
 % SimpleRTL - a TikZ package for superior RTL diagrams
 %---------------------------------------------------------------------------------
 %% simpertl.sty
-%% Copyright (C) 2026 Lukas Rumpel [cite: 4, 243]
+%% Copyright (C) 2026 Lukas Rumpel 
 %%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3c
@@ -232,29 +232,29 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% bus
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    rtl_bus/.style={
-        line width=2,
-        decoration={
-            markings,
-            mark=at position 0.5 with {
-                \node[font=\sffamily\large, sloped, inner sep=0pt] {/};
-                \node[font=\sffamily, below=2pt] {#1};
-            }
-        },
-        postaction={decorate}
-    },
+	rtl_bus/.style={
+			line width=2,
+			decoration={
+					markings,
+					mark=at position 0.5 with {
+							\node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+							\node[font=\sffamily, below=2pt] {#1};
+						}
+				},
+			postaction={decorate}
+		},
 	rtl_bus/.default={},
 	rtl_bus_flex/.style args={#1,#2}{
-        line width=2,
-        decoration={
-            markings,
-            mark=at position {#2} with {
-                \node[font=\sffamily\large, sloped, inner sep=0pt] {/};
-                \node[font=\sffamily, below=2pt] {#1};
-            }
-        },
-        postaction={decorate}
-    },
+			line width=2,
+			decoration={
+					markings,
+					mark=at position {#2} with {
+							\node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+							\node[font=\sffamily, below=2pt] {#1};
+						}
+				},
+			postaction={decorate}
+		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% boolean operations
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
