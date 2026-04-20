@@ -1,12 +1,12 @@
-\chapter{\sffamily Signals, Routing and Signal Manipulation}
+\sectionright{\sffamily Signals, Routing and Signal Manipulation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Signal Manipulation}
+\subsection{\sffamily Signal Manipulation}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         The \texttt{rtl\_sigmanip} element is used for non-arithmetic operations on signals, such as bit-slicing, concatenation, or sign extension. Its elliptical shape and soft orange tint visually separate it from functional logic blocks, indicating that the data is being reinterpreted or rearranged rather than computed.
 
-    \subsection{\sffamily Attributes}
+    \subsubsection{\sffamily Attributes}
     \begin{center}
         \begin{tabular}{lp{8cm}}
         \toprule
@@ -17,47 +17,51 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Signal Slicing]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_reg] (R1) at (0,0) {Reg};
     \node[rtl_sigmanip, right=1.5cm of R1] (Slice) {[15:8]};
     
     \draw[->, rtl_bus={16}] (R1) -- (Slice);
-    \draw[->, rtl_bus={8}] (Slice) -- ++(1.5,0) node[right] {Byte\_1};
+    \draw[->, rtl_bus={8}] (Slice) -- ++(3.5,0) node[right] {Byte\_1};
 \end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Bus Styling}
+\subsection{\sffamily Bus Styling}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         To represent multi-bit data paths, \texttt{SimpleRTL} provides the \texttt{rtl\_bus} decoration. Applying this style to a path increases the line width and adds a diagonal slash at the midpoint, accompanied by a label indicating the bus width. 
         
         A key feature of this decoration is its geometric intelligence: the element automatically calculates the total path length and places the \texttt{/} marker at exactly half the distance (\texttt{pos=0.5}). This ensures that the bus indicator remains perfectly centered, regardless of whether the path is a simple straight line or a complex route with multiple segments (e.g., a Z-route).
-    \subsection{\sffamily Attributes}
+        Alternatively the position of the bus decoration can be set manually by using the \texttt{rtl\_bus\_flex} element.
+    \subsubsection{\sffamily Attributes}
     \begin{center}
         \begin{tabular}{lp{8cm}}
         \toprule
             \textbf{Attribute} & \textbf{Effect} \\
             \midrule
             \texttt{rtl\_bus=\{width\}} & Activates the bus decoration and sets the bit-width label. \\
+            \midrule
+            \texttt{rtl\_bus=\{width,pos\}} & Activates the bus decoration, sets the bit-width label and alters the default positions of the decoration. \\
             \bottomrule
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Bus Decoration]
 \begin{tikzpicture}[>=Stealth, thick]
     \draw[->, rtl_bus={32}] (0,0) -- (3,0) node[right] {Data\_Bus};
-    \draw[->, rtl_bus={n}] (0,-1) -- (3,-1) node[right] {Generic\_Bus};
+    \draw[->, rtl_bus={}] (0,-1) -- (3,-1) node[right] {Generic\_Bus};
+    \draw[->, rtl_bus_flex={n,0.33}] (7,0) -- (10,0) node[right] {Flex\_Bus};
 \end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Advanced Routing (Z and U Routes)}
+\subsection{\sffamily Advanced Routing (Z and U Routes)}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         Manual routing with standard TikZ coordinates can become tedious in complex diagrams. \texttt{SimpleRTL} introduces two specialized commands to automate common routing patterns:
         
         \begin{itemize}
@@ -65,7 +69,7 @@
             \item \textbf{\textbackslash routeU}: Creates a "Feedback" or U-shaped route. This is ideal for signals that need to loop back from an output to a previous input stage.
         \end{itemize}
 
-    \subsection{\sffamily Parameters}
+    \subsubsection{\sffamily Parameters}
     \begin{center}
         \begin{tabular}{lp{8cm}}
         \toprule
@@ -77,7 +81,7 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Advanced Routing]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_reg] (A) at (0,0) {A};

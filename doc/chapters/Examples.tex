@@ -1,6 +1,6 @@
-\chapter{\sffamily Examples}
+\sectionright{\sffamily Examples}
 
-\section{\sffamily Simple Multiplexer}
+\subsection{\sffamily Simple Multiplexer}
 
 %Ruler:
 %-------------------------------------------
@@ -21,7 +21,7 @@ scale=0.8]
 \end{tikzpicture}
 \end{RTLexample}
 
-\section{\sffamily Accumulator}
+\subsection{\sffamily Accumulator}
 
 \begin{RTLexample}[Accumulator Data Path]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
@@ -36,7 +36,7 @@ scale=0.8]
     \draw[->, rtl_bus={16}] (Add.east) -- (Reg.west) node[midway, above] {sum};
     
     % 4. Feedback Path (Register to Adder)
-    % We use routeU: Start at east, move 1cm out, 2.5cm down, and end at Add.south
+    % routeU: Start at east, move 1cm out, 2.5cm down, and end at Add.south
     \routeU[->, rtl_bus={16}, blue]{Reg.east}{1}{-2.5}{Add.west};
     
     % 5. Control Signals

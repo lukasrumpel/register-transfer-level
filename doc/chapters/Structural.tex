@@ -1,13 +1,13 @@
-\chapter{\sffamily  Structural Elements}
+\sectionright{\sffamily  Structural Elements}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Custom Module (Black Box)}
+\subsection{\sffamily Custom Module (Black Box)}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         The \texttt{rtl\_module} element is designed to represent higher-level functional units or "black boxes" within a digital system. It is based on the \texttt{rtl\_base\_box} but features a distinct green tint and a dedicated label at the top. 
         This element is ideal for hierarchical diagrams where the internal logic of a component is abstracted away. The label is automatically positioned at the \texttt{north} edge with a slight offset to prevent overlap with incoming signals.
 
-    \subsection{\sffamily Attributes}
+    \subsubsection{\sffamily Attributes}
         The module's name is passed as a mandatory argument to the style. Dimensioning follows the standard package scheme:
 
     \begin{center}
@@ -22,13 +22,13 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Anchors}
+    \subsubsection{\sffamily Anchors}
         \begin{itemize}
             \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors.
             \item \textbf{Note}: Use the \texttt{north} anchor with caution, as it shares space with the module label.
         \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
         The following example demonstrates a scaled module with a custom name.
 
 \begin{RTLexample}[Custom Module]
@@ -44,13 +44,13 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Constant Value}
+\subsection{\sffamily Constant Value}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         The \texttt{rtl\_const} element is used to represent static signal values, parameters, or hardcoded addresses. Its distinct purple color serves as a visual cue that the signal originating from this block is non-volatile and fixed during the design's operation. 
         Internally, it behaves like an asynchronous register without any clock or control logic.
 
-    \subsection{\sffamily Attributes}
+    \subsubsection{\sffamily Attributes}
     \begin{center}
         \begin{tabular}{lp{8cm}}
         \toprule
@@ -62,12 +62,12 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Anchors}
+    \subsubsection{\sffamily Anchors}
         \begin{itemize}
             \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
         \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
         Constants are typically used to feed fixed values into operators or modules.
 
 \begin{RTLexample}[Constant Value]
@@ -76,20 +76,20 @@
     \node[rtl_const] (C1) at (0,0) {8'hFF};
     
     % Example of signal origin
-    \draw[->, rtl_bus={8}] (C1.east) -- ++(1.5,0) node[right] {MASK};
+    \draw[->, rtl_bus={8}] (C1.east) -- ++(1.5,0) node[right] {};
     
 \end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Cutset Decoration}
+\subsection{\sffamily Cutset Decoration}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         The \texttt{is\_cutset} style is a specialized visual decorator used to mark timing boundaries, pipelining stages, or logic cuts within a diagram. Instead of being a standalone node, it is applied as an attribute to any existing rectangular element (like registers or modules).
         
         The style automatically draws a dashed vertical line through the center of the component, extending slightly (5\%) beyond the \texttt{north} and \texttt{south} boundaries. By utilizing the \texttt{foreground} PGF layer, the cutset remains clearly visible even when applied to filled or shaded elements.
 
-    \subsection{\sffamily Attributes}
+    \subsubsection{\sffamily Attributes}
         The style accepts an optional argument to customize the appearance of the dashed line, such as changing its color or thickness.
 
     \begin{center}
@@ -102,12 +102,12 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Anchors}
+    \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
             \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
         The following example shows how to mark a timing boundary across a series of registers.
 
 \begin{RTLexample}[Logic Cutset]

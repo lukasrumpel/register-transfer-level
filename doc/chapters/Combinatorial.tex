@@ -1,14 +1,14 @@
-\chapter{\sffamily Combinatorial Logic}
+\sectionright{\sffamily Combinatorial Logic}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Multiplexers and Demultiplexers}
+\subsection{\sffamily Multiplexers and Demultiplexers}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         Multiplexers and Demultiplexers are the primary steering elements for data paths. In \texttt{SimpleRTL}, these are not simple nodes but are generated via the \texttt{\textbackslash createMux} and \texttt{\textbackslash createDemux} commands. 
         
         These commands automatically calculate the vertical distribution of ports based on the number of labels provided. Multiplexers (yellow-tinted trapezoids) converge multiple inputs into one output, while Demultiplexers diverge a single input into multiple outputs. Both elements feature a dedicated selection (\texttt{sel}) anchor at the bottom.
 
-    \subsection{\sffamily Attributes}
+    \subsubsection{\sffamily Attributes}
         The dimensions of the trapezoids can be adjusted using specific MUX/DEMUX sizing keys:
 
     \begin{center}
@@ -22,40 +22,46 @@
         \end{tabular}
     \end{center}
 
-    \subsection{\sffamily Anchors}
+    \subsubsection{\sffamily Anchors}
         \begin{itemize}
             \item \textbf{MUX Inputs}: \texttt{\{name\}-in-1} to \texttt{\{name\}-in-n}.
             \item \textbf{DEMUX Outputs}: \texttt{\{name\}-out-1} to \texttt{\{name\}-out-n}.
             \item \textbf{Common}: \texttt{\{name\}-sel} (bottom), \texttt{\{name\}-out} (MUX) or \texttt{\{name\}-in} (DEMUX).
         \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[MUX and DEMUX]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     % 4-to-1 MUX
     \createMux[rtl_mux_width=3cm]{M1}(0,0){00, 01, 10, 11}
-    \draw[<-] (M1-sel) -- ++(0,-0.6) node[below] {sel};
+    \draw[<-, rtl_bus={}] (M1-sel) -- ++(0,-1.6) node[below] {sel};
     \draw[->] (M1-out) -- ++(0.8,0) node[right] {Y};
+    \foreach \anchor/\label/\xshift/\yshift in {1/in\_1/-1/0, 2/in\_2/-1/0, 3/in\_3/-1/0, 4/in\_4/-1/0} {
+        \draw[<-] (M1-in-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+    }
 
     % 1-to-2 DEMUX
     \createDemux[rtl_mux_width=2cm]{D1}(8.5,0){A, B}
     \draw[<-] (D1-in) -- ++(-0.8,0) node[left] {X};
-    \draw[<-] (D1-sel) -- ++(0,-0.6) node[below] {sel};
+    \draw[<-, rtl_bus={}] (D1-sel) -- ++(0,-1.6) node[below] {sel};
+    \foreach \anchor/\label/\xshift/\yshift in {1/out\_1/1.3/0, 2/out\_2/1.3/0} {
+        \draw[<-] (D1-out-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+    }
 \end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\sffamily Tri-State Buffer}
+\subsection{\sffamily Tri-State Buffer}
 
-    \subsection{\sffamily Description}
+    \subsubsection{\sffamily Description}
         The \texttt{rtl\_tristate} element represents a controlled buffer used for bus arbitration. It features a triangular shape with an integrated \texttt{EN} (Enable) label at the top. This element is essential for modeling high-impedance states in shared signal lines.
 
-    \subsection{\sffamily Anchors}
+    \subsubsection{\sffamily Anchors}
         \begin{itemize}
             \item \textbf{Specific Anchors}: Inherits \texttt{regular polygon} anchors. The \texttt{north} anchor is pre-configured for the Enable signal.
         \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Tri-State Buffer]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_tristate, rtl_size=2cm] (TS) at (0,0) {};

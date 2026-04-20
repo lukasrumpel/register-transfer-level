@@ -1,4 +1,4 @@
-\chapter{\sffamily Introduction}
+\sectionright{\sffamily Introduction}
 At the time of this package's creation, no easy-to-use TikZ package existed for generating high-quality, publication-ready RTL diagrams. While RTL diagrams can certainly be drawn using standard TikZ or \texttt{circuitikz} elements, anyone who has attempted this can confirm that it is a tedious and highly inconvenient process.
 
 During the preparation of a publication, I needed to draw an extensive RTL diagram of a complete DSP architecture. This necessity led to the creation of \texttt{SimpleRTL}. With \texttt{SimpleRTL}, creating modern, accurate, and high-quality RTL diagrams is done in the blink of an eye! 
@@ -29,11 +29,11 @@ Please consider this package an open invitation to share your suggestions, featu
     
 \textit{Disclaimer: While \texttt{SimpleRTL} guarantees pristine hardware diagrams, it unfortunately cannot protect you from reviewers nitpicking your textual formulations.}
 
-\section{Common Attributes and Sizing}
+\subsection{Common Attributes and Sizing}
 
 To ensure visual consistency across complex RTL diagrams, \texttt{SimpleRTL} provides a unified set of sizing attributes. While standard TikZ parameters remain functional, using the dedicated \texttt{rtl\_*} keys is highly recommended to maintain a clean and semantic naming scheme throughout your source code.
 
-\subsection*{Global Dimension Keys}
+\subsubsection{Global Dimension Keys}
 The following attributes allow for precise control over the geometric properties of RTL elements:
 
 \begin{itemize}
@@ -42,7 +42,7 @@ The following attributes allow for precise control over the geometric properties
     \item \textbf{\texttt{rtl\_size}}: Defines the diameter for circular arithmetical operators (e.g., adders or multipliers).
 \end{itemize}
 
-\subsection*{The Anchor Convention}
+\subsubsection{The Anchor Convention}
 Connectivity is the backbone of any RTL diagram. \texttt{SimpleRTL} follows a predictable, hyphenated naming convention to make signal routing intuitive:
 
 \begin{center}

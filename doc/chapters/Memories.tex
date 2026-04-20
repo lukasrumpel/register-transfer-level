@@ -1,12 +1,12 @@
-\chapter{\sffamily Memories}
+\sectionright{\sffamily Memories}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily Asynchronous Register}
+    \subsection{\sffamily Asynchronous Register}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
            The \texttt{rtl\_reg} element serves as the fundamental building block for asynchronous memory components and simple transparent buffers. Based on the \texttt{rtl\_base\_box}, it provides a clean, stylized rectangular container for data storage. Since it is implemented as a TikZ \texttt{rectangle}, it inherits all standard geometric anchors. For complex routing and precise signal alignment, utilizing these native anchors is highly recommended.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
             While standard TikZ styling (like \texttt{fill} or \texttt{thick}) can be applied directly, the following package-specific attributes allow for easy dimensioning:
 
         \begin{center}
@@ -20,13 +20,13 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
         \begin{itemize}
             \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors (\texttt{north west}, etc.).
             \item \textbf{Custom Anchors}: Only standard rectangular anchors are provided.
         \end{itemize}
 
-        \subsection{\sffamily Listing}
+        \subsubsection{\sffamily Listing}
             The following example demonstrates various sizing options and the available anchor points for signal routing.
 
 \begin{RTLexample}[Async Reg/Buffer]
@@ -44,12 +44,12 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily Synchronous Register}
+    \subsection{\sffamily Synchronous Register}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
         The \texttt{rtl\_reg\_clk} element represents a standard edge-triggered memory component. It extends the asynchronous base model by integrating a dynamic clock indicator (a triangle) at the component's edge. This element is designed to signify synchronous behavior in data paths and provides specialized anchors to simplify clock tree integration.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
         \begin{center}
             \begin{tabular}{lp{8cm}}
             \toprule
@@ -61,14 +61,14 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors.
                 \item \textbf{Custom Clock Anchor}: \texttt{\{node\}-CLK} \\
                 This anchor is precisely aligned with the tip of the clock indicator triangle, ensuring that clock signals meet the register at the correct logical point.
             \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Sync Reg/Buffer]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_reg_clk] (Reg) at (0,0) {Reg};
@@ -81,12 +81,12 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily Register File}
+    \subsection{\sffamily Register File}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
         The \texttt{rtl\_regfile} element is designed to represent memory arrays or register banks. To visually distinguish a file from a single register, this element utilizes a "double copy" shadow effect, simulating a stack of multiple memory instances. It maintains the standard rectangular anchor scheme while providing a visual representation of storage depth.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
         \begin{center}
             \begin{tabular}{lp{8cm}}
             \toprule
@@ -98,12 +98,12 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
             \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[Register File]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_regfile] (file) at (0,0) {Reg File};
@@ -115,12 +115,12 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily D Flip Flop}
+    \subsection{\sffamily D Flip Flop}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
         The \texttt{rtl\_dff} element implements a classic D-type flip-flop. To cater to different circuit requirements, the \texttt{SimpleRTL} package provides two variants: the standard \texttt{rtl\_dff} and the \texttt{rtl\_dff\_inv}, which includes an additional inverted output ($\mathsf{\overline{Q}}$). Both variants feature a clock input indicator and pre-defined internal pins.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
         \begin{center}
             \begin{tabular}{lp{8cm}}
             \toprule
@@ -132,12 +132,12 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Specific Anchors}: \texttt{D}, \texttt{CLK}, \texttt{Q}, \texttt{Qbar} (inverted only).
             \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[D flip flop]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_dff] (dff1) at (0,0) {};
@@ -153,12 +153,12 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily SR Flip Flop}
+    \subsection{\sffamily SR Flip Flop}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
         The \texttt{rtl\_sr\_ff} represents a Set-Reset flip-flop. Unlike the D-type variants, it is implemented in a single configuration that features both complementary outputs ($Q$ and $\mathsf{\overline{Q}}$) by default. It follows the standard rectangular footprint of the \texttt{rtl\_base\_box}.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
         \begin{center}
             \begin{tabular}{lp{8cm}}
             \toprule
@@ -170,12 +170,12 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Specific Anchors}: \texttt{S}, \texttt{R}, \texttt{Q}, \texttt{Qbar}.
             \end{itemize}
 
-        \subsection{\sffamily Listing}
+        \subsubsection{\sffamily Listing}
 \begin{RTLexample}[SR flip flop]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_sr_ff] (sr1) at (0,0) {};
@@ -186,12 +186,12 @@
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{\sffamily JK Flip Flop}
+    \subsection{\sffamily JK Flip Flop}
 
-        \subsection{\sffamily Description}
+        \subsubsection{\sffamily Description}
         The \texttt{rtl\_jk\_ff} element implements the versatile JK flip-flop. Designed for synchronous logic, it includes a clock indicator positioned between the J and K inputs. It provides a comprehensive set of specific anchors for all inputs and its complementary outputs.
 
-        \subsection{\sffamily Attributes}
+        \subsubsection{\sffamily Attributes}
         \begin{center}
             \begin{tabular}{lp{8cm}}
             \toprule
@@ -203,12 +203,12 @@
             \end{tabular}
         \end{center}
 
-        \subsection{\sffamily Anchors}
+        \subsubsection{\sffamily Anchors}
             \begin{itemize}
                 \item \textbf{Specific Anchors}: \texttt{J}, \texttt{CLK}, \texttt{K}, \texttt{Q}, \texttt{Qbar}.
             \end{itemize}
 
-    \subsection{\sffamily Listing}
+    \subsubsection{\sffamily Listing}
 \begin{RTLexample}[JK flip flop]
 \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
     \node[rtl_jk_ff] (jk1) at (0,0) {};

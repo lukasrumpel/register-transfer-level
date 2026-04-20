@@ -1,61 +1,144 @@
-\documentclass{book}
-\usepackage[european]{circuitikz}
-\usepackage{../simplertl}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+% ==============================================================================
+% MUTED DEEP FOREST (WHITE EDITION) - STABLE KOMA BUILD
+% ==============================================================================
+\documentclass[
+    fontsize=11pt,
+    twoside=semi,
+    fleqn,
+    parskip=half,
+    a4paper,
+    headsepline,
+    bibliography=totoc,
+    DIV=15,
+    BCOR=1cm,
+    ngerman
+]{scrartcl}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{../simplertl}
 \usepackage{lmodern}
-%\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{xcolor}
-\usepackage{framed}
+\usepackage{tcolorbox}
 \usepackage{graphicx}
 \usepackage[sf]{caption}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{amssymb}
-\usepackage{theorem}
-\usepackage{icomma}
-\usepackage[pdfpagelabels, bookmarksnumbered=true, bookmarksopen=true, bookmarksopenlevel=1, pdftitle={ xxx}, pdfauthor={ xxx }, pdfsubject={Anleitung}, pdfstartview=FitV, plainpages=false]{hyperref}
-\usepackage{pdfpages}
-\usepackage[babel]{csquotes}
-\usepackage{listings}
-\usepackage{makeidx}
-\usepackage{fancybox}
-\usepackage{svn-multi}
-\usepackage{scrlayer-scrpage}
-\usepackage{amsmath}
-\usepackage{float}
-\usepackage[export]{adjustbox}
-\usepackage{setspace}
-\usepackage{ifthen}
-\usepackage{titlesec}
-\usepackage{makeidx}
+\usepackage{amsmath, amssymb}
 \usepackage{geometry}
-\usepackage[backend=biber]{biblatex}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+\tcbuselibrary{listings, breakable, skins}
+\usepackage{scrlayer-scrpage}
+\usepackage{framed}
+\usepackage{setspace}
+\usepackage{makeidx}
+\usepackage{longtable}
+\usepackage{booktabs}
 \usepackage{tcolorbox}
-\tcbuselibrary{breakable}
-\tcbuselibrary{listings, skins} % WICHTIG: 'skins' hinzugefügt für bicolor!
-\usetikzlibrary{circuits.logic.US}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
-\usetikzlibrary{babel}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[italic]{mathastext}
+\usepackage[strict]{changepage}
+\usepackage[backend=biber]{biblatex}
+\tcbuselibrary{listings, breakable}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning}
+
+% ------------------------------------------------------------------------------
+% Color Theme
+% ------------------------------------------------------------------------------
+\definecolor{main}{RGB}{80, 110, 90}        % Waldgrün
+\definecolor{textC}{RGB}{20, 20, 15}        % NEU: Nahezu Schwarz für Schärfe
+\definecolor{textCGray}{RGB}{140, 140, 135} % Steingrau
+\definecolor{alert}{RGB}{170, 105, 95}      % Ziegelrot
+\definecolor{example}{RGB}{115, 140, 160}   % Schieferblau
+
+\usepackage[colorlinks=true, linkcolor=main, citecolor=example, urlcolor=alert]{hyperref}
+\geometry{left=2.5cm, textwidth=16cm, marginpar=3cm}
+\makeindex
+
+% ------------------------------------------------------------------------------
+% KOMA-DESIGN (REPLACING TITLESEC)
+% ------------------------------------------------------------------------------
+\addtokomafont{section}{\color{main}\Huge}
+\addtokomafont{subsection}{\color{example}\Large}
+\addtokomafont{subsubsection}{\color{textCGray}\large}
+\addtokomafont{pagenumber}{\color{textCGray}}
+
+\clearpairofpagestyles
+\ihead{\color{textCGray}{\texttt{simpleRTL}}}
+\chead{\color{main}\headmark}
+\ofoot{\color{textCGray}\pagemark}
+\automark{section}
+
+\newcommand{\sectionrightstar}[1]{
+    \cleardoublepage
+    \section*{#1}
+}
+
+\newcommand{\sectionright}[1]{
+    \cleardoublepage
+    \section{#1}
+}
+
+\lstdefinestyle{myStyle}{
+    basicstyle=\footnotesize\ttfamily\color{textC},
+    keywordstyle=\bfseries\color{main},
+    commentstyle=\itshape\color{textCGray},
+    stringstyle=\color{alert},
+    identifierstyle=\color{example},
+    backgroundcolor=\color{white},
+    frame=single,
+    rulecolor=\color{textCGray}
+}
+
+% ------------------------------------------------------------------------------
+% CUSTOM BLOCKS (ALERT & EXAMPLE)
+% ------------------------------------------------------------------------------
+% Alert-Block (Ziegelrot für kritische Hardware-Warnungen)
+\newtcolorbox{alertblock}[1][Achtung]{
+    colback=white,          % Hintergrundfarbe (weiß für sauberen Druck)
+    colframe=alert,         % Rahmen- und Titelfarbe (Ziegelrot)
+    coltext=textC,          % Textfarbe (Anthrazit)
+    fonttitle=\bfseries,    % Titelschrift fett
+    title=#1,               % Dynamischer Titel (Standard: "Achtung")
+    arc=0pt,                % Scharfe Kanten (Industrie-Look)
+    boxrule=1pt,            % Rahmendicke
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm % Innenabstände
+}
+
+% Example-Block (Schieferblau für Mathe & Theorie)
+\newtcolorbox{exampleblock}[1][Beispiel]{
+    colback=white,
+    colframe=example,       
+    coltext=textC,          
+    fonttitle=\bfseries,    
+    title=#1,               
+    arc=0pt,                
+    boxrule=1pt,
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm
+}
+
+% ... (Präambel bleibt gleich) ...
 
 \newtcblisting{RTLexample}[1][]{
-    width=\textwidth,           % <-- GEÄNDERT: \textwidth statt \paperwidth nutzen
-    colback=gray!5,             
-    colframe=blue!40!black,     
+    width=\textwidth,           
+    colback=white,              % Weiß für sauberen Druck
+    colframe=example,           % Schieferblau für den Rahmen
+    coltext=textC,              % Dunkles Anthrazit für den Text
     title={\textbf{Example:} #1}, 
     listing and text,           
     bicolor,                    
     colbacklower=white,         
     fonttitle=\sffamily\bfseries,
+    arc=0pt,                    % Scharfe Kanten für den Industrie-Look
+    boxrule=1pt,                % Konsistente Rahmendicke
     breakable,                  
     listing options={
         language=TeX,
-        basicstyle=\ttfamily\small,
-        keywordstyle=\color{blue},
-        commentstyle=\color{green!50!black},
+        basicstyle=\ttfamily\small\color{textC},
+        keywordstyle=\bfseries\color{main},       % Waldgrün für Keywords
+        commentstyle=\itshape\color{textCGray},   % Steingrau für Kommentare
+        stringstyle=\color{alert},                % Ziegelrot für Strings
+        identifierstyle=\color{example},          % Schieferblau für Identifier
         breaklines=true
     }
 }
@@ -64,12 +147,11 @@
     \sffamily
     \begin{titlepage}
         \centering
-        \vspace{2cm}
-        \Huge\texttt{SimpleRTL}\\
-        \Large publication quality RTL diagrams\\
-        \vspace{4cm}
+        \vspace*{2cm}
+        {\color{main}\Huge\texttt{\textbf{SimpleRTL}}}\\[0.5cm]
+        {\color{example}\Large publication quality RTL diagrams}\\[4cm]
         \begin{center}
-            \begin{tikzpicture}[>=Stealth, thick]
+            \begin{tikzpicture}[>=Stealth, thick, text=textC, draw=textC]
                 \createMux[rtl_height=3.5cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}}
                 \draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
                 \draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
@@ -83,13 +165,29 @@
                 \draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm]{Sel} -- +(-1.5, -1)  (muxTitle-sel);
             \end{tikzpicture}
         \end{center}
-        \vspace{4cm}
-        Lukas Rumpel\\
-        2026 \\
-        under MIT license
+        \vspace*{2cm}
+        {\color{textC}\large Lukas Rumpel}\\[0.2cm]
+        {\color{textCGray}2026} \\[0.2cm]
+        {\color{textCGray}under MIT license}
     \end{titlepage}
 
+    \newpage\thispagestyle{empty}\null 
+
+
+    \clearpage
+    \pagenumbering{Roman}
+    \setcounter{page}{3}
+
     \tableofcontents 
+
+    \cleardoublepage
+    \newcounter{savepage}
+    \setcounter{savepage}{\value{page}} % Wir merken uns die aktuelle Seite
+    \pagenumbering{arabic}
+    \setcounter{page}{\value{savepage}} % Wir setzen den Zähler wieder ein (z.B. 12)
+    \setcounter{section}{0}
+    \setcounter{table}{0} 
+    \setcounter{figure}{0}
 
     \include{chapters/Introduction}
     \include{chapters/Memories}
