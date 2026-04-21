@@ -1,0 +1,196 @@
+% ==============================================================================
+% MUTED DEEP FOREST (WHITE EDITION) - STABLE KOMA BUILD
+% ==============================================================================
+\documentclass[
+    fontsize=11pt,
+    twoside=semi,
+    fleqn,
+    parskip=half,
+    a4paper,
+    headsepline,
+    bibliography=totoc,
+    DIV=15,
+    BCOR=1cm,
+    ngerman
+]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{../register-transfer-level}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage[sf]{caption}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\tcbuselibrary{listings, breakable, skins}
+\usepackage{scrlayer-scrpage}
+\usepackage{framed}
+\usepackage{setspace}
+\usepackage{makeidx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage[scaled]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[italic]{mathastext}
+\usepackage[strict]{changepage}
+\usepackage[backend=biber]{biblatex}
+\tcbuselibrary{listings, breakable}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, positioning}
+
+% ------------------------------------------------------------------------------
+% Color Theme
+% ------------------------------------------------------------------------------
+\definecolor{main}{RGB}{80, 110, 90}      
+\definecolor{textC}{RGB}{20, 20, 15}      
+\definecolor{textCGray}{RGB}{140, 140, 135} 
+\definecolor{alert}{RGB}{170, 105, 95}     
+\definecolor{example}{RGB}{115, 140, 160}  
+
+\usepackage[colorlinks=true, linkcolor=main, citecolor=example, urlcolor=alert]{hyperref}
+\geometry{left=2.5cm, textwidth=16cm, marginpar=3cm}
+\makeindex
+
+% ------------------------------------------------------------------------------
+% KOMA-DESIGN (REPLACING TITLESEC)
+% ------------------------------------------------------------------------------
+\addtokomafont{section}{\color{main}\Huge}
+\addtokomafont{subsection}{\color{example}\Large}
+\addtokomafont{subsubsection}{\color{textCGray}\large}
+\addtokomafont{pagenumber}{\color{textCGray}}
+
+\clearpairofpagestyles
+\ihead{\color{textCGray}{\texttt{register-transfer-level}}}
+\chead{\color{main}\headmark}
+\ofoot{\color{textCGray}\pagemark}
+\automark{section}
+
+\newcommand{\sectionrightstar}[1]{
+    \cleardoublepage
+    \section*{#1}
+}
+
+\newcommand{\sectionright}[1]{
+    \cleardoublepage
+    \section{#1}
+}
+
+\lstdefinestyle{myStyle}{
+    basicstyle=\footnotesize\ttfamily\color{textC},
+    keywordstyle=\bfseries\color{main},
+    commentstyle=\itshape\color{textCGray},
+    stringstyle=\color{alert},
+    identifierstyle=\color{example},
+    backgroundcolor=\color{white},
+    frame=single,
+    rulecolor=\color{textCGray}
+}
+
+% ------------------------------------------------------------------------------
+% CUSTOM BLOCKS (ALERT & EXAMPLE)
+% ------------------------------------------------------------------------------
+
+\newtcolorbox{alertblock}[1][Achtung]{
+    colback=white,          
+    colframe=alert,         
+    coltext=textC,          
+    fonttitle=\bfseries,    
+    title=#1,               
+    arc=0pt,                
+    boxrule=1pt,           
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm
+}
+
+\newtcolorbox{exampleblock}[1][Beispiel]{
+    colback=white,
+    colframe=example,       
+    coltext=textC,          
+    fonttitle=\bfseries,    
+    title=#1,               
+    arc=0pt,                
+    boxrule=1pt,
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm
+}
+
+\newtcblisting{RTLexample}[1][]{
+    width=\textwidth,           
+    colback=white,
+    colframe=example,
+    coltext=textC,
+    title={\textbf{Example:} #1}, 
+    listing and text,           
+    bicolor,                    
+    colbacklower=white,         
+    fonttitle=\sffamily\bfseries,
+    arc=0pt,
+    boxrule=1pt,
+    breakable,                  
+    listing options={
+        language=TeX,
+        basicstyle=\ttfamily\small\color{textC},
+        keywordstyle=\bfseries\color{main},
+        commentstyle=\itshape\color{textCGray},
+        stringstyle=\color{alert},
+        identifierstyle=\color{example},
+        breaklines=true
+    }
+}
+
+\begin{document}
+\sffamily
+\begin{titlepage}
+	\centering
+	\vspace*{2cm}
+	{\color{main}\Huge\texttt{\textbf{register-transfer-level}}}\\[0.5cm]
+	{\color{example}\Large publication quality RTL diagrams}\\[4cm]
+	\begin{center}
+		\begin{tikzpicture}[>=Stealth, thick, text=textC, draw=textC]
+			\createMux[rtl_height=3.5cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}}
+			\draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
+			\draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
+			\draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {Input 3};
+			\draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {Input 4};
+			\draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {Input 5};
+			\draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {Input 6};
+			\draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {Input 7};
+			\draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {Input 8};
+			\draw[->] (muxTitle-out) -- ++(1, 0) node[right] {Output};
+			\draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm]{Sel} -- +(-1.5, -1)  (muxTitle-sel);
+		\end{tikzpicture}
+	\end{center}
+	\vspace*{2cm}
+	{\color{textC}\large Lukas Rumpel}\\[0.2cm]
+	{\color{textCGray}2026} \\[0.2cm]
+	{\color{textCGray}under LPPL-1.3 license}
+\end{titlepage}
+
+\newpage\thispagestyle{empty}\null
+
+
+\clearpage
+\pagenumbering{Roman}
+\setcounter{page}{3}
+
+\tableofcontents
+
+\cleardoublepage
+\newcounter{savepage}
+\setcounter{savepage}{\value{page}}
+\pagenumbering{arabic}
+\setcounter{page}{\value{savepage}}
+\setcounter{section}{0}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+
+\include{chapters/Introduction}
+\include{chapters/Memories}
+\include{chapters/Structural}
+\include{chapters/Combinatorial}
+\include{chapters/Operators}
+\include{chapters/Signals_Routing_Manipulation}
+\include{chapters/Examples}
+\end{document}

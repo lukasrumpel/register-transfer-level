@@ -1,0 +1,418 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% register-transfer-level - a TikZ package for superior RTL diagrams
+%---------------------------------------------------------------------------------
+%% simpertl.sty
+%% Copyright (C) 2026 Lukas Rumpel 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3c
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%%
+%% The Current Maintainer of this work is Lukas Rumpel. 
+%%
+%% This work consists of the files simpertl.sty and simpertl.tex
+%% and the derived file simpertl.pdf.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{register-transfer-level}[2026 v1.0 Custom RTL TikZ Library]
+
+\RequirePackage[european]{circuitikz}
+\RequirePackage{graphicx}
+
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{main,foreground}
+
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+
+\tikzset{
+	rtl_width/.style={
+			minimum width=#1
+		},
+	rtl_height/.style={
+			minimum height=#1
+		},
+	rtl_mux_width/.style={
+			minimum height=#1
+		},
+	rtl_mux_height/.style={
+			minimum width=#1
+		},
+	rtl_size/.style={
+			minimum size=#1
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% clocked register - pin3 = clock
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_has_clock/.style={
+			path picture={
+					\path (path picture bounding box.south west) coordinate (SW);
+					\draw[thick, black, line join=round] ($(SW)+(0, 0.2)$) -- ($(SW)+(0.3, 0.35)$) -- ($(SW)+(0, 0.5)$);
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% clocked register - pin2 = clock
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_has_clock_middle/.style={
+			path picture={
+					\path (path picture bounding box.west) coordinate (W);
+					\draw[thick, black, line join=round] ($(W)+(0, 0.2)$) -- ($(W)+(0.3, 0.0)$) -- ($(W)-(0, 0.2)$);
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% base box
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_base_box/.style={
+			draw,
+			rectangle,
+			fill=blue!5,
+			minimum width=1.5cm,
+			minimum height=1.8cm,
+			outer sep=0pt,
+			drop shadow,
+			font=\sffamily\large,
+			align=center
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% D flip flop
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_dff/.style={
+			rtl_base_box,
+			minimum width=1.2cm,
+			rtl_has_clock,
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
+					($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% D flip flop with inverted output
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_dff_inv/.style={
+			rtl_base_box,
+			minimum width=1.2cm,
+			rtl_has_clock,
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
+					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% RS flip flop
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_sr_ff/.style={
+			rtl_base_box,
+			minimum width=1.2cm,
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-S) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {S}
+					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-R) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {R}
+					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% JK flip flop
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_jk_ff/.style={
+			rtl_base_box,
+			minimum width=1.2cm,
+			rtl_has_clock_middle,
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-J) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {J}
+					($(\simplertl@savednode.west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-K) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {K}
+					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% clocked register
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_reg_clk/.style={
+			rtl_base_box,
+			rtl_has_clock,
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% unclocked register
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_reg/.style={
+			rtl_base_box
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% register file
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_regfile/.style={
+			rtl_base_box,
+			drop shadow/.style={},
+			double copy shadow={
+					shadow xshift=2.5pt,
+					shadow yshift=2.5pt,
+					fill=blue!5,
+					draw=black
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% arithmetical operations
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_op/.style={
+			draw, circle,
+			fill=white,
+			minimum size=0.8cm,
+			inner sep=0pt,
+			font=\sffamily\large,
+			drop shadow
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% primitive MUX
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_mux/.style={
+			draw, trapezium,
+			trapezium angle=75,
+			shape border rotate=270,
+			fill=yellow!20,
+			align=center,
+			outer sep=0pt,
+			font=\sffamily\scriptsize,
+			drop shadow,
+			minimum height=0.8cm,
+			minimum width=2.0cm
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% primitive DEMUX
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_demux/.style={
+			draw,
+			trapezium,
+			trapezium angle=75,
+			shape border rotate=90,
+			fill=yellow!20,
+			align=center,
+			outer sep=0pt,
+			font=\sffamily\scriptsize,
+			drop shadow,
+			minimum height=0.8cm,
+			minimum width=2.0cm
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% shifter
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_shifter/.style={
+			draw,
+			rectangle,
+			rounded corners=2pt,
+			fill=orange!15,
+			minimum size=1cm,
+			align=center,
+			font=\bfseries,
+			drop shadow,
+			font=\sffamily\large
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% bus
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_bus/.style={
+			line width=2,
+			decoration={
+					markings,
+					mark=at position 0.5 with {
+							\node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+							\node[font=\sffamily, below=2pt] {#1};
+						}
+				},
+			postaction={decorate}
+		},
+	rtl_bus/.default={},
+	rtl_bus_flex/.style args={#1,#2}{
+			line width=2,
+			decoration={
+					markings,
+					mark=at position {#2} with {
+							\node[font=\sffamily\large, sloped, inner sep=0pt] {/};
+							\node[font=\sffamily, below=2pt] {#1};
+						}
+				},
+			postaction={decorate}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% boolean operations
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_boolean/.style={
+			draw,
+			rectangle,
+			rounded corners=2pt,
+			fill=violet!15,
+			minimum size=1cm,
+			align=center,
+			font=\sffamily\large,
+			drop shadow
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% module
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_module/.style={
+			rtl_base_box,
+			fill=green!5,
+			font=\sffamily\large,
+			label={
+					[anchor=north, align=center, font=\sffamily\large, yshift=-0.1cm]north:#1
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% constants
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_const/.style={
+			rtl_base_box,
+			fill=purple!5
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% signal manipulation
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_sigmanip/.style={
+			draw,
+			ellipse,
+			fill=orange!10,
+			align=center,
+			font=\sffamily\large,
+			drop shadow,
+			inner sep=2pt
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% custom MUX Creation
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	rtl_tristate/.style={
+			draw,
+			regular polygon,
+			regular polygon sides=3,
+			shape border rotate=-90,
+			fill=gray!5,
+			minimum size=0.8cm,
+			inner sep=0pt,
+			drop shadow,
+			label={
+					[font=\sffamily\small, inner sep=8pt, yshift=4pt, anchor=north]north:EN
+				}
+		},
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% cutset line
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	is_cutset/.style={
+			append after command={
+					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					\pgfextra{
+						\begin{pgfonlayer}{foreground}
+							\draw[#1, dashed, thick]
+							($(\simplertl@savednode.north)!-0.05!(\simplertl@savednode.south)$)--
+							($(\simplertl@savednode.south)!-0.05!(\simplertl@savednode.north)$);
+						\end{pgfonlayer}
+					}
+					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+				}
+		}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom MUX creation 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters:
+% #1 []             : Style Arguments
+% #2 {}             : Name of Node
+% #3 (x,y)          : optional Coordinates
+% #4 {{}, {},...}   : List of Input Labels
+\NewDocumentCommand{\createMux}{ O{} m d() m }{
+	\IfNoValueTF{#3}{
+		\node[rtl_mux, #1] (#2) {\rotatebox{-90}{ }};
+	}{
+		\node[rtl_mux, #1] at (#3) (#2) {\rotatebox{-90}{ }};
+	}
+
+	\foreach \dummy [count=\n] in {#4} { \global\let\simplertl@inputcount\n }
+	\foreach \lbl [count=\i] in {#4} {
+			\ifnum\simplertl@inputcount=1
+				\pgfmathsetmacro{\pos}{0.5}
+			\else
+				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\simplertl@inputcount-1) ) * 1.2 }
+			\fi
+			\coordinate (#2-in-\i) at ($(#2.north west)!\pos!(#2.south west)$);
+			\node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] at (#2-in-\i) {\lbl};
+		}
+	\coordinate (#2-out) at (#2.east);
+	\coordinate (#2-sel) at (#2.south);
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom DEMUX creation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parameters:
+% #1 []             : Style Arguments
+% #2 {}             : Name of Node
+% #3 (x,y)          : optional Coordinates
+% #4 {{}, {},...}   : List of Output Labels
+\NewDocumentCommand{\createDemux}{ O{} m d() m }{
+	\IfNoValueTF{#3}{
+		\node[rtl_demux, #1] (#2) {\rotatebox{90}{ }};
+	}{
+		\node[rtl_demux, #1] at (#3) (#2) {\rotatebox{90}{ }};
+	}
+
+	\foreach \dummy [count=\n] in {#4} { \global\let\simplertl@outputcount\n }
+	\foreach \lbl [count=\i] in {#4} {
+			\ifnum\simplertl@outputcount=1
+				\pgfmathsetmacro{\pos}{0.5}
+			\else
+				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\simplertl@outputcount-1) ) * 1.2 }
+			\fi
+			\coordinate (#2-out-\i) at ($(#2.north east)!\pos!(#2.south east)$);
+			\node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] at (#2-out-\i) {\lbl};
+		}
+	\coordinate (#2-in) at (#2.west);
+	\coordinate (#2-sel) at (#2.south);
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Z Route
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Z-Route (Dogleg)
+% #1 []             : Style Arguments
+% #2 {}             : Start
+% #3 {}             : Kink (x)
+% #4 {}             : Destination
+\NewDocumentCommand{\routeZ}{ O{} m m m }{
+	\draw[#1] (#2) -- ++(#3, 0) |- (#4)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% feedback Route
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% U-Route (Feedback Loop)
+% #1 []             : Style Arguments
+% #2 {}             : Start
+% #3 {}             : Inititial Space (x)
+% #3 {}             : Height of Arc (y)
+% #4 {}             : Destination
+\NewDocumentCommand{\routeU}{ O{} m m m m }{
+	\draw[#1] (#2) -- ++(#3, 0) -- ++(0, #4) -| ($(#5)-(#3, 0)$) -- (#5)
+}
+
+\endinput
