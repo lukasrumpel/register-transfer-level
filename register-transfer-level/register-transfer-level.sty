@@ -104,7 +104,7 @@
 			append after command={
 					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
 					($(\regtrans@savednode.north west)!0.15!(\regtrans@savednode.south west)$) coordinate (\regtrans@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
-					($(\regtrans@savednode.south west)!0.15!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\regtrans@savednode.south west)!0.2!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
 					($(\regtrans@savednode.north east)!0.15!(\regtrans@savednode.south east)$) coordinate (\regtrans@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
 					($(\regtrans@savednode.south east)!0.15!(\regtrans@savednode.north east)$) coordinate (\regtrans@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
 					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}

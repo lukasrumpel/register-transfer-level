@@ -4,6 +4,11 @@
   <img src="examples/8_1_MUX/8_1_MUX.svg" width="200" alt="register-transfer-level Architecture Preview">
 </p>
 
+<p align="center">
+Maintainer: Lukas Rumpel
+Licence: LPPL-1.3c
+</p>
+
 At the time of this package's creation, no easy-to-use TikZ package existed for generating high-quality, publication-ready RTL diagrams. While RTL diagrams can certainly be drawn using standard TikZ or circuitikz elements, anyone who has attempted this can confirm that it is a tedious and highly inconvenient process.
 
 During the preparation of a publication, I needed to draw an extensive RTL diagram of a complete DSP architecture. This necessity led to the creation of register-transfer-level.
