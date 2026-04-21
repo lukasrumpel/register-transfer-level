@@ -1,13 +1,15 @@
 # register-transfer-level: Publication-Quality RTL Diagrams in TikZ
 
 <p align="center">
-  <img src="/examples/8_1_MUX/8_1_MUX.svg" width="200" alt="register-transfer-level Architecture Preview">
+  <img src="examples/8_1_MUX/8_1_MUX.svg" width="200" alt="register-transfer-level Architecture Preview">
 </p>
 
 ---
+
 Maintainer: Lukas Rumpel
 
 Licence: LPPL-1.3c
+
 ---
 
 At the time of this package's creation, no easy-to-use TikZ package existed for generating high-quality, publication-ready RTL diagrams. While RTL diagrams can certainly be drawn using standard TikZ or circuitikz elements, anyone who has attempted this can confirm that it is a tedious and highly inconvenient process.
