@@ -32,7 +32,7 @@
 \subsection{\sffamily Bus Styling}
 
     \subsubsection{\sffamily Description}
-        To represent multi-bit data paths, \texttt{SimpleRTL} provides the \texttt{rtl\_bus} decoration. Applying this style to a path increases the line width and adds a diagonal slash at the midpoint, accompanied by a label indicating the bus width. 
+        To represent multi-bit data paths, \texttt{register-transfer-level} provides the \texttt{rtl\_bus} decoration. Applying this style to a path increases the line width and adds a diagonal slash at the midpoint, accompanied by a label indicating the bus width. 
         
         A key feature of this decoration is its geometric intelligence: the element automatically calculates the total path length and places the \texttt{/} marker at exactly half the distance (\texttt{pos=0.5}). This ensures that the bus indicator remains perfectly centered, regardless of whether the path is a simple straight line or a complex route with multiple segments (e.g., a Z-route).
         Alternatively the position of the bus decoration can be set manually by using the \texttt{rtl\_bus\_flex} element.
@@ -62,7 +62,7 @@
 \subsection{\sffamily Advanced Routing (Z and U Routes)}
 
     \subsubsection{\sffamily Description}
-        Manual routing with standard TikZ coordinates can become tedious in complex diagrams. \texttt{SimpleRTL} introduces two specialized commands to automate common routing patterns:
+        Manual routing with standard TikZ coordinates can become tedious in complex diagrams. \texttt{register-transfer-level} introduces two specialized commands to automate common routing patterns:
         
         \begin{itemize}
             \item \textbf{\textbackslash routeZ}: Creates a "Dogleg" or Z-shaped route. It moves horizontally, then vertically, and finally horizontal again to reach the destination.

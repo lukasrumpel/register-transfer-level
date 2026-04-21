@@ -1,219 +1,219 @@
 \sectionright{\sffamily Memories}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily Asynchronous Register}
+\subsection{\sffamily Asynchronous Register}
 
-        \subsubsection{\sffamily Description}
-           The \texttt{rtl\_reg} element serves as the fundamental building block for asynchronous memory components and simple transparent buffers. Based on the \texttt{rtl\_base\_box}, it provides a clean, stylized rectangular container for data storage. Since it is implemented as a TikZ \texttt{rectangle}, it inherits all standard geometric anchors. For complex routing and precise signal alignment, utilizing these native anchors is highly recommended.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_reg} element serves as the fundamental building block for asynchronous memory components and simple transparent buffers. Based on the \texttt{rtl\_base\_box}, it provides a clean, stylized rectangular container for data storage. Since it is implemented as a TikZ \texttt{rectangle}, it inherits all standard geometric anchors. For complex routing and precise signal alignment, utilizing these native anchors is highly recommended.
 
-        \subsubsection{\sffamily Attributes}
-            While standard TikZ styling (like \texttt{fill} or \texttt{thick}) can be applied directly, the following package-specific attributes allow for easy dimensioning:
+\subsubsection{\sffamily Attributes}
+While standard TikZ styling (like \texttt{fill} or \texttt{thick}) can be applied directly, the following package-specific attributes allow for easy dimensioning:
 
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width of the register (Default: 1.5cm). \\
-                \texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width of the register (Default: 1.5cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-        \begin{itemize}
-            \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors (\texttt{north west}, etc.).
-            \item \textbf{Custom Anchors}: Only standard rectangular anchors are provided.
-        \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors (\texttt{north west}, etc.).
+	\item \textbf{Custom Anchors}: Only standard rectangular anchors are provided.
+\end{itemize}
 
-        \subsubsection{\sffamily Listing}
-            The following example demonstrates various sizing options and the available anchor points for signal routing.
+\subsubsection{\sffamily Listing}
+The following example demonstrates various sizing options and the available anchor points for signal routing.
 
 \begin{RTLexample}[Async Reg/Buffer]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_reg] (Buffer1) at (0,0) {Async \\ Reg 1};
-    \node[rtl_reg, rtl_width=2cm, right=1cm of Buffer1] (Buffer2) {Async \\ Reg 2};
-    \node[rtl_reg, fill=green!20, rtl_height=3cm] (Buffer3) at (6.5,0) {Async \\ Reg 3};
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_reg] (Buffer1) at (0,0) {Async \\ Reg 1};
+		\node[rtl_reg, rtl_width=2cm, right=1cm of Buffer1] (Buffer2) {Async \\ Reg 2};
+		\node[rtl_reg, fill=green!20, rtl_height=3cm] (Buffer3) at (6.5,0) {Async \\ Reg 3};
 
-    \node[rtl_reg] (Buffer4) at (10,0) {};
-    \foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0, south west/sw/-0.5/0, 
-        north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5} {
-        \draw[<-] (Buffer4.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
+		\node[rtl_reg] (Buffer4) at (10,0) {};
+		\foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0, south west/sw/-0.5/0,
+				north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5} {
+				\draw[<-] (Buffer4.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+	\end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily Synchronous Register}
+\subsection{\sffamily Synchronous Register}
 
-        \subsubsection{\sffamily Description}
-        The \texttt{rtl\_reg\_clk} element represents a standard edge-triggered memory component. It extends the asynchronous base model by integrating a dynamic clock indicator (a triangle) at the component's edge. This element is designed to signify synchronous behavior in data paths and provides specialized anchors to simplify clock tree integration.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_reg\_clk} element represents a standard edge-triggered memory component. It extends the asynchronous base model by integrating a dynamic clock indicator (a triangle) at the component's edge. This element is designed to signify synchronous behavior in data paths and provides specialized anchors to simplify clock tree integration.
 
-        \subsubsection{\sffamily Attributes}
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width of the register (Default: 1.5cm). \\
-                \texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\subsubsection{\sffamily Attributes}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width of the register (Default: 1.5cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-            \begin{itemize}
-                \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors.
-                \item \textbf{Custom Clock Anchor}: \texttt{\{node\}-CLK} \\
-                This anchor is precisely aligned with the tip of the clock indicator triangle, ensuring that clock signals meet the register at the correct logical point.
-            \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, and all corner anchors.
+	\item \textbf{Custom Clock Anchor}: \texttt{\{node\}-CLK} \\
+	      This anchor is precisely aligned with the tip of the clock indicator triangle, ensuring that clock signals meet the register at the correct logical point.
+\end{itemize}
 
-    \subsubsection{\sffamily Listing}
+\subsubsection{\sffamily Listing}
 \begin{RTLexample}[Sync Reg/Buffer]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_reg_clk] (Reg) at (0,0) {Reg};
-    \foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0, 
-        north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5} {
-        \draw[<-] (Reg.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-    \draw[<-] (Reg-CLK) -- ++(-0.5,0) node[left] {clk};
-\end{tikzpicture}
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_reg_clk] (Reg) at (0,0) {Reg};
+		\foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0,
+				north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5} {
+				\draw[<-] (Reg.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+		\draw[<-] (Reg-CLK) -- ++(-0.5,0) node[left] {clk};
+	\end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily Register File}
+\subsection{\sffamily Register File}
 
-        \subsubsection{\sffamily Description}
-        The \texttt{rtl\_regfile} element is designed to represent memory arrays or register banks. To visually distinguish a file from a single register, this element utilizes a "double copy" shadow effect, simulating a stack of multiple memory instances. It maintains the standard rectangular anchor scheme while providing a visual representation of storage depth.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_regfile} element is designed to represent memory arrays or register banks. To visually distinguish a file from a single register, this element utilizes a "double copy" shadow effect, simulating a stack of multiple memory instances. It maintains the standard rectangular anchor scheme while providing a visual representation of storage depth.
 
-        \subsubsection{\sffamily Attributes}
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width of the register (Default: 1.5cm). \\
-                \texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\subsubsection{\sffamily Attributes}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width of the register (Default: 1.5cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height of the register (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-            \begin{itemize}
-                \item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
-            \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Standard Anchors}: Full set of rectangular anchors (\texttt{north}, \texttt{south}, etc.).
+\end{itemize}
 
-    \subsubsection{\sffamily Listing}
+\subsubsection{\sffamily Listing}
 \begin{RTLexample}[Register File]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_regfile] (file) at (0,0) {Reg File};
-    \foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0, 
-        north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5, south west/sw/-0.5/0} {
-        \draw[<-] (file.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_regfile] (file) at (0,0) {Reg File};
+		\foreach \anchor/\label/\xshift/\yshift in {north/n/0/0.5, north west/nw/-0.5/0, west/w/-0.5/0,
+				north east/ne/0.5/0, east/e/0.5/0, south east/se/0.5/0, south/s/0/-0.5, south west/sw/-0.5/0} {
+				\draw[<-] (file.\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+	\end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily D Flip Flop}
+\subsection{\sffamily D Flip Flop}
 
-        \subsubsection{\sffamily Description}
-        The \texttt{rtl\_dff} element implements a classic D-type flip-flop. To cater to different circuit requirements, the \texttt{SimpleRTL} package provides two variants: the standard \texttt{rtl\_dff} and the \texttt{rtl\_dff\_inv}, which includes an additional inverted output ($\mathsf{\overline{Q}}$). Both variants feature a clock input indicator and pre-defined internal pins.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_dff} element implements a classic D-type flip-flop. To cater to different circuit requirements, the \texttt{register-transfer-level} package provides two variants: the standard \texttt{rtl\_dff} and the \texttt{rtl\_dff\_inv}, which includes an additional inverted output ($\mathsf{\overline{Q}}$). Both variants feature a clock input indicator and pre-defined internal pins.
 
-        \subsubsection{\sffamily Attributes}
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width (Default: 1.2cm). \\
-                \texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\subsubsection{\sffamily Attributes}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width (Default: 1.2cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-            \begin{itemize}
-                \item \textbf{Specific Anchors}: \texttt{D}, \texttt{CLK}, \texttt{Q}, \texttt{Qbar} (inverted only).
-            \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Specific Anchors}: \texttt{D}, \texttt{CLK}, \texttt{Q}, \texttt{Qbar} (inverted only).
+\end{itemize}
 
-    \subsubsection{\sffamily Listing}
+\subsubsection{\sffamily Listing}
 \begin{RTLexample}[D flip flop]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_dff] (dff1) at (0,0) {};
-    \foreach \anchor/\label/\xshift/\yshift in {D/d/-0.5/0, CLK/clk/-0.5/0, Q/q/0.5/0} {
-        \draw[<-] (dff1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_dff] (dff1) at (0,0) {};
+		\foreach \anchor/\label/\xshift/\yshift in {D/d/-0.5/0, CLK/clk/-0.5/0, Q/q/0.5/0} {
+				\draw[<-] (dff1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
 
-    \node[rtl_dff_inv] (dff2) at (5,0) {};
-    \foreach \anchor/\label/\xshift/\yshift in {D/d/-0.5/0, CLK/clk/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
-        \draw[<-] (dff2-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
+		\node[rtl_dff_inv] (dff2) at (5,0) {};
+		\foreach \anchor/\label/\xshift/\yshift in {D/d/-0.5/0, CLK/clk/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
+				\draw[<-] (dff2-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+	\end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily SR Flip Flop}
+\subsection{\sffamily SR Flip Flop}
 
-        \subsubsection{\sffamily Description}
-        The \texttt{rtl\_sr\_ff} represents a Set-Reset flip-flop. Unlike the D-type variants, it is implemented in a single configuration that features both complementary outputs ($Q$ and $\mathsf{\overline{Q}}$) by default. It follows the standard rectangular footprint of the \texttt{rtl\_base\_box}.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_sr\_ff} represents a Set-Reset flip-flop. Unlike the D-type variants, it is implemented in a single configuration that features both complementary outputs ($Q$ and $\mathsf{\overline{Q}}$) by default. It follows the standard rectangular footprint of the \texttt{rtl\_base\_box}.
 
-        \subsubsection{\sffamily Attributes}
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width (Default: 1.2cm). \\
-                \texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\subsubsection{\sffamily Attributes}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width (Default: 1.2cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-            \begin{itemize}
-                \item \textbf{Specific Anchors}: \texttt{S}, \texttt{R}, \texttt{Q}, \texttt{Qbar}.
-            \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Specific Anchors}: \texttt{S}, \texttt{R}, \texttt{Q}, \texttt{Qbar}.
+\end{itemize}
 
-        \subsubsection{\sffamily Listing}
+\subsubsection{\sffamily Listing}
 \begin{RTLexample}[SR flip flop]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_sr_ff] (sr1) at (0,0) {};
-    \foreach \anchor/\label/\xshift/\yshift in {R/r/-0.5/0, S/s/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
-        \draw[<-] (sr1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_sr_ff] (sr1) at (0,0) {};
+		\foreach \anchor/\label/\xshift/\yshift in {R/r/-0.5/0, S/s/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
+				\draw[<-] (sr1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+	\end{tikzpicture}
 \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{\sffamily JK Flip Flop}
+\subsection{\sffamily JK Flip Flop}
 
-        \subsubsection{\sffamily Description}
-        The \texttt{rtl\_jk\_ff} element implements the versatile JK flip-flop. Designed for synchronous logic, it includes a clock indicator positioned between the J and K inputs. It provides a comprehensive set of specific anchors for all inputs and its complementary outputs.
+\subsubsection{\sffamily Description}
+The \texttt{rtl\_jk\_ff} element implements the versatile JK flip-flop. Designed for synchronous logic, it includes a clock indicator positioned between the J and K inputs. It provides a comprehensive set of specific anchors for all inputs and its complementary outputs.
 
-        \subsubsection{\sffamily Attributes}
-        \begin{center}
-            \begin{tabular}{lp{8cm}}
-            \toprule
-                \textbf{Attribute} & \textbf{Effect} \\
-                \midrule
-                \texttt{rtl\_width} & Sets the minimum width (Default: 1.2cm). \\
-                \texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
-                \bottomrule
-            \end{tabular}
-        \end{center}
+\subsubsection{\sffamily Attributes}
+\begin{center}
+	\begin{tabular}{lp{8cm}}
+		\toprule
+		\textbf{Attribute}   & \textbf{Effect}                           \\
+		\midrule
+		\texttt{rtl\_width}  & Sets the minimum width (Default: 1.2cm).  \\
+		\texttt{rtl\_height} & Sets the minimum height (Default: 1.8cm). \\
+		\bottomrule
+	\end{tabular}
+\end{center}
 
-        \subsubsection{\sffamily Anchors}
-            \begin{itemize}
-                \item \textbf{Specific Anchors}: \texttt{J}, \texttt{CLK}, \texttt{K}, \texttt{Q}, \texttt{Qbar}.
-            \end{itemize}
+\subsubsection{\sffamily Anchors}
+\begin{itemize}
+	\item \textbf{Specific Anchors}: \texttt{J}, \texttt{CLK}, \texttt{K}, \texttt{Q}, \texttt{Qbar}.
+\end{itemize}
 
-    \subsubsection{\sffamily Listing}
+\subsubsection{\sffamily Listing}
 \begin{RTLexample}[JK flip flop]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    \node[rtl_jk_ff] (jk1) at (0,0) {};
-    \foreach \anchor/\label/\xshift/\yshift in {J/j/-0.5/0, CLK/clk/-0.5/0, K/k/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
-        \draw[<-] (jk1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
+	\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+		\node[rtl_jk_ff] (jk1) at (0,0) {};
+		\foreach \anchor/\label/\xshift/\yshift in {J/j/-0.5/0, CLK/clk/-0.5/0, K/k/-0.5/0, Q/q/0.5/0, Qbar/$\mathsf{\overline{q}}$/0.5/0} {
+				\draw[<-] (jk1-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
+			}
+	\end{tikzpicture}
 \end{RTLexample}

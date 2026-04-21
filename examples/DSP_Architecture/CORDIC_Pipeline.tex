@@ -1,193 +1,193 @@
 \documentclass[border=10pt]{standalone}
 \usepackage[european]{circuitikz}
 \usetikzlibrary{circuits.logic.US}
-\usepackage{../../Package/simpleRTL}
+\usepackage{../../register-transfer-level}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
 
 \begin{document}
 
 \begin{circuitikz}[>=Stealth, thick, line width=1.25]
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % outside pipeline - left
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % pipeline
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \node[rtl_reg_clk, label={[anchor=south east, font=\sffamily\Large, inner sep=3pt]south east:EN}, rtl_width=1.5cm, rtl_height=21cm] at (-7.25, -7) (inReg1) {\sffamily\Large Reg};
-        \draw[] ($(inReg1.south east)+(0.2, +0.35)$) circle (0.2);
-
-        \node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (-2.5, 1.75) (xor1) {};
-        \node[rtl_op, rtl_size=1.4cm] at (0.0, 1.75) {\Huge $\mathsf{+}$};
-
-        \node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (-2.5, -2.25) (xor2) {};
-        \node[rtl_op, rtl_size=1.4cm] at (0.0, -2.25) {\Huge $\mathsf{+}$};
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% outside pipeline - left
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-        \createMux[rtl_height=1.2cm]{muxX}(5,1){0, 1}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% pipeline
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\node[rtl_reg_clk, label={[anchor=south east, font=\sffamily\Large, inner sep=3pt]south east:EN}, rtl_width=1.5cm, rtl_height=21cm] at (-7.25, -7) (inReg1) {\sffamily\Large Reg};
+	\draw[] ($(inReg1.south east)+(0.2, +0.35)$) circle (0.2);
 
-        \createMux[rtl_height=1.2cm]{muxY}(5,-3){0, 1}
+	\node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (-2.5, 1.75) (xor1) {};
+	\node[rtl_op, rtl_size=1.4cm] at (0.0, 1.75) {\Huge $\mathsf{+}$};
 
-        \createMux[rtl_height=1.2cm]{muxZ}(5,-7){0, 1}
-
-        \node[rtl_const] at (-1, -6.25) () {\Huge 0};
-
-    \node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=red] at (9, -7) (pipReg1) {\sffamily\Large Reg};
-
-
-        \node[rtl_shifter] at (13, 1) (shiftX) {\Huge  $\mathsf{\gg \, i}$};
-
-        \node[rtl_shifter] at (13, -3) (shiftY) {\Huge  $\mathsf{\gg \, i}$};
-
-        \node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (17.5, 1) (xor3) {};
-        \node[rtl_op, rtl_size=1.4cm] at (20, 1) {\Huge $\mathsf{+}$};
-
-        \node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (17.5, -3) (xor4) {};
-        \node[rtl_op, rtl_size=1.4cm] at (20, -3) {\Huge $\mathsf{+}$};
-
-    \node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=brown] at (23, -7) (pipReg4) {\sffamily\Large Reg};
-
-        \node[rtl_op, rtl_size=1.4cm] at (27, 1) (addX) {\Huge $+$};
-
-        \node[rtl_op, rtl_size=1.4cm] at (26, -3) (addY) {\Huge $+$};
-
-        \node[rtl_op, rtl_size=1.4cm] at (27, -7) (addZ) {\Huge $+$};
-
-        \node[rtl_op, rtl_size=1.4cm] at (27, -11) (multSign) {\Huge $*$};
-
-        \node[rtl_module] at (27, -15) (ATANLUT) {\Huge ATAN \\ \Huge LUT};
-
-    \node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=blue] at (30, -7) (pipReg5) {\sffamily\Large Reg};
-        
-        \node[rtl_module] at (34, -7) () {\Huge Quadrant \\ \Huge Mapping};
-        
-    \node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm , label={[anchor=south east, font=\sffamily\Large, inner sep=3pt]south east:EN}] at (38, -7) (pipReg6) {\sffamily\Large Reg};
-        \draw[] ($(pipReg6.south east)+(0.2, +0.35)$) circle (0.2);
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % outside pipeline - below
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \node[rtl_module, rtl_width=3cm, rtl_height=3cm] at (12,-20) {\Huge Controller};
-
-    \node[rtl_module] at (3,-20) {\Huge $\mathsf{> 0}$};
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % data flow arrows
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    \draw[->, rtl_bus={\LARGE N}, line width=3] (-9.5, 1.75) node[left]{\Huge $\mathsf{X_{in}}$} -- (-8, 1.75);
-    \draw[->, rtl_bus={\LARGE N}, line width=3] (-9.5, -2.25) node[left]{\Huge $\mathsf{Y_{in}}$} -- (-8, -2.25);
-    
-    \draw[->, rtl_bus, line width=3] (-6.5, 1.75) -- +(1, 0.0) -- +(1, 0.25) -- (xor1.input 1);
-    \node[circ, fill=red, scale=2, color=brown] at (-4.75, 2.0) (getSignAbs1) {};
-    \draw[->, rtl_bus={\LARGE N}, line width=3, color=brown] (getSignAbs1) -- +(0, -2.25) -- +(4.75,-2.25)node[midway, above, yshift=0.0cm]{\Huge $\mathsf{X_{in}[N]}$} -- +(4.75, -0.95); %extract Sign for two's complement
-    \node[circ, fill=black, scale=2, color=brown] at (-4.75, 1.525) (getSignAbs1XOR) {};
-    \draw[->, line width=3, color=brown] (getSignAbs1XOR) -- (xor1.input 2);
-    \draw[->, line width=3] (xor1.output) -- +(0.7,0);
-
-    \draw[->, rtl_bus, line width=3] (-6.5, -2.25) -- +(1, 0.0) -- +(1, 0.25) -- (xor2.input 1);
-    \node[circ, fill=black, scale=2, color=brown] at (-4.75, -2.0) (getSignAbs2) {};
-    \draw[->, rtl_bus={\LARGE N}, line width=3, color=brown] (getSignAbs2) -- +(0, -2.25) -- +(4.75,-2.25)node[midway, above, yshift=-0cm]{\Huge $\mathsf{Y_{in}[N]}$} -- +(4.75, -0.95); %extract Sign for two's complement
-    \node[circ, fill=black, scale=2, color=brown] at (-4.75, -2.475) (getSignAbs2XOR) {};
-    \draw[->, line width=3, color=brown] (getSignAbs2XOR) -- (xor2.input 2);
-    \draw[->, line width=3] (xor2.output) -- +(0.7,0);
-
-    \draw[->, rtl_bus, line width=3] (0.7, 1.75) -- (muxX-in-1);
-    \draw[->, rtl_bus, line width=3] (0.7, -2.25) -- (muxY-in-1);
-    \draw[->, rtl_bus, line width=3] (-0.25, -6.25) -- (muxZ-in-1) node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
-    \draw[->, rtl_bus, line width=3] (muxX-out) -- (8.25, 1);
-    \draw[->, rtl_bus, line width=3] (muxY-out) -- (8.25, -3);
-    \draw[->, rtl_bus, line width=3] (muxZ-out) -- (8.25, -7);
+	\node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (-2.5, -2.25) (xor2) {};
+	\node[rtl_op, rtl_size=1.4cm] at (0.0, -2.25) {\Huge $\mathsf{+}$};
 
 
-    \draw[->, rtl_bus, line width=3] (9.75, 1) -- (12.2, 1) node[above, midway, yshift=0.2cm]{\sffamily\Huge X};
-    \draw[->, rtl_bus, line width=3] (9.75, -3) -- (12.2, -3) node[above, midway, yshift=0.2cm]{\sffamily\Huge Y};
-    \node[circ, fill=black, scale=2, color=brown] at (10.75, -3) (getSing) {};
-    \draw[->, rtl_bus, line width=3] (9.75, -7) -- (22.25, -7) node[above, midway, yshift=0.2cm]{\sffamily\Huge Z};
-    \draw[->, line width=3, color=brown] (getSing) -- +(0, -2.5) -- +(4.5, -2.5) node[midway, sloped, xshift=0cm] {\LARGE /} node[midway, below, xshift=-0.1cm, yshift=-0.2cm] {\sffamily\LARGE N} node[above, midway, yshift=0.2cm]{\sffamily\Huge Y[N]} -- +(4.5, 3.8) -- (xor3.input 2);
-    \node[circ, fill=black, scale=2, color=brown] at (10.75, -5.5) (getSing2) {};
-    \draw[->, line width=3, color=brown] (getSing2) -- +(0, -5.5) -- +(11.5, -5.5);
-    
-    \draw[->, rtl_bus, line width=3] (9.75, -15) -- (22.25, -15) node[above, midway, yshift=0.2cm]{\sffamily\Huge i};
+	\createMux[rtl_height=1.2cm]{muxX}(5,1){0, 1}
 
-    \draw[->, rtl_bus, line width=3] (13.85, 1) -- +(1, 0.0) -- +(1, 0.25) -- (xor3.input 1);
-    \draw[->, line width=3] (xor3.output) -- +(0.7,0);
-    \draw[->, rtl_bus, line width=3] (20.7, 1) -- (22.25, 1);
-    \node[circ, fill=black, scale=2, color=brown] at (15.25, -0.5) (getSignAbs3XOR) {};
-    \draw[->, line width=3, color=brown] (getSignAbs3XOR) -- +(4.75, 0) -- +(4.75, 0.8);
+	\createMux[rtl_height=1.2cm]{muxY}(5,-3){0, 1}
 
-    \draw[->, rtl_bus, line width=3] (13.85, -3) -- +(1, 0.0) -- +(1, 0.25) -- (xor4.input 1);
-    \node[circ, fill=black, scale=2, color=brown] at (15.25, -3.225) (xor4SIGN) {};
-    \draw[->, line width=3, color=brown] (xor4SIGN) -- (xor4.input 2);
-    \draw[->, line width=3] (xor4.output) -- +(0.7,0);
-    \draw[->, rtl_bus, line width=3] (20.7, -3) -- (22.25, -3);
-    \node[circ, fill=black, scale=2, color=brown] at (15.25, -4.5) (getSignAbs4XOR) {};
-    \draw[->, line width=3, color=brown] (getSignAbs4XOR) -- +(4.75, 0) -- +(4.75, 0.8);
+	\createMux[rtl_height=1.2cm]{muxZ}(5,-7){0, 1}
 
-    \draw[->, rtl_bus, line width=3] (23.75, 1) -- (26.3, 1);
-    \draw[->, rtl_bus, line width=3] (27.7, 1) -- (29.25, 1);
-    \draw[->, rtl_bus, line width=3] (23.75, -3) -- (25.3, -3);
-    \draw[->, rtl_bus, line width=3] (26.7, -3) -- (29.25, -3);
-    \draw[->, rtl_bus, line width=3] (23.75, -7) -- (26.3, -7);
-    \draw[->, rtl_bus, line width=3] (27.7, -7) -- (29.25, -7);
-    \draw[->, rtl_bus, line width=3] (27, -10.3) -- (27, -7.7);
-    \draw[->, rtl_bus, line width=3] (27, -14.1) -- (27, -11.7) node[midway, left, xshift=-0.1cm]{\Huge $\mathsf{\alpha_i}$} node[midway, right, xshift=0.1cm]{\sffamily\LARGE N};
-    \draw[->, rtl_bus, line width=3, color=brown] (23.75, -11) -- +(2.55, 0);
-    \draw[->, rtl_bus, line width=3] (23.75, -15) -- +(2, 0);
+	\node[rtl_const] at (-1, -6.25) () {\Huge 0};
 
-    \node[circ, fill=black, scale=2] at (24.5, 1) (getXISigned) {};
-    \draw[->, line width=3] (getXISigned) -- +(-0, -1.5) -- +(1.5, -1.5) -- +(1.5, -3.3);
-
-    \node[circ, fill=black, scale=2] at (24, -3) (getYISigned) {};
-    \draw[->, line width=3] (getYISigned) -- +(0, 1.5) -- +(3, 1.5) -- +(3, 3.3) node[right, yshift=-0.2cm]{\Huge \textbf{-}};
-
-    \draw[->, line width=3] (30.75, -7) -- (32.25, -7);
-    \node[circ, fill=black, scale=2] at (31.5, -7) (zRegVal) {};
-
-    \draw[->, rtl_bus, line width=3] (35.8, -7) -- (37.25, -7) node[above, midway]{} node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
-     \draw[->, rtl_bus, line width=3] (38.75, -7) -- (41.5, -7) node[midway, right, xshift=1.5cm] {\Huge $\mathsf{\phi}$} node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
+	\node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=red] at (9, -7) (pipReg1) {\sffamily\Large Reg};
 
 
+	\node[rtl_shifter] at (13, 1) (shiftX) {\Huge  $\mathsf{\gg \, i}$};
 
-    \draw[<-] (39.15, -17.15) -- (40, -17.15) -- +(0, -1.85) -- +(-26.1, -1.85) node[right, above, xshift=2.5cm]{\sffamily\LARGE LATCH OUTPUT};
-    \draw[->, dashed] (15.4, -21) -- (13.9, -21) node[above, midway]{\sffamily\LARGE CLK};
-    \draw[->, rtl_bus, line width=3] (10.1, -20) node[above, xshift=-1.75cm]{\sffamily\LARGE ITERATION} -- (3.75, -20) node[midway, below, yshift=-0.2cm]{\sffamily\LARGE L};
+	\node[rtl_shifter] at (13, -3) (shiftY) {\Huge  $\mathsf{\gg \, i}$};
 
-    %pipeline latch of input vals
-    \draw[->] (3, -19.125) -- +(0, 18) -- +(2, 18) -- (muxX.south);
-    \node[circ] at (3, -5.125) (muxYSELSig) {};
-    \draw[->] (muxYSELSig) -- +(2, 0) -- (muxY.south);
-    \node[circ] at (3, -9.125) (muxZSELSig) {};
-    \draw[->] (muxZSELSig) -- +(2, 0) -- (muxZ.south);
-    \node[circ] at (3, -13.125) (busySig) {};
-    \draw[->] (busySig) -- +(2,0) node[right]{\sffamily\Huge BUSY};
-    \draw[->] (0, -24) node[left]{\sffamily\Huge START}-- +(12, 0) -- +(12, 2.5);
-    \node[circ] at (3, -17.15) (latchInput) {};
-    \draw[->] (latchInput) -- +(-9.1,0);
+	\node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (17.5, 1) (xor3) {};
+	\node[rtl_op, rtl_size=1.4cm] at (20, 1) {\Huge $\mathsf{+}$};
+
+	\node[xor gate US, draw, fill=white, logic gate inputs=nn, scale=2] at (17.5, -3) (xor4) {};
+	\node[rtl_op, rtl_size=1.4cm] at (20, -3) {\Huge $\mathsf{+}$};
+
+	\node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=brown] at (23, -7) (pipReg4) {\sffamily\Large Reg};
+
+	\node[rtl_op, rtl_size=1.4cm] at (27, 1) (addX) {\Huge $+$};
+
+	\node[rtl_op, rtl_size=1.4cm] at (26, -3) (addY) {\Huge $+$};
+
+	\node[rtl_op, rtl_size=1.4cm] at (27, -7) (addZ) {\Huge $+$};
+
+	\node[rtl_op, rtl_size=1.4cm] at (27, -11) (multSign) {\Huge $*$};
+
+	\node[rtl_module] at (27, -15) (ATANLUT) {\Huge ATAN \\ \Huge LUT};
+
+	\node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm, is_cutset=blue] at (30, -7) (pipReg5) {\sffamily\Large Reg};
+
+	\node[rtl_module] at (34, -7) () {\Huge Quadrant \\ \Huge Mapping};
+
+	\node[rtl_reg_clk, rtl_width=1.5cm, rtl_height=21cm , label={[anchor=south east, font=\sffamily\Large, inner sep=3pt]south east:EN}] at (38, -7) (pipReg6) {\sffamily\Large Reg};
+	\draw[] ($(pipReg6.south east)+(0.2, +0.35)$) circle (0.2);
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% outside pipeline - below
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\node[rtl_module, rtl_width=3cm, rtl_height=3cm] at (12,-20) {\Huge Controller};
+
+	\node[rtl_module] at (3,-20) {\Huge $\mathsf{> 0}$};
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% data flow arrows
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\draw[->, rtl_bus={\LARGE N}, line width=3] (-9.5, 1.75) node[left]{\Huge $\mathsf{X_{in}}$} -- (-8, 1.75);
+	\draw[->, rtl_bus={\LARGE N}, line width=3] (-9.5, -2.25) node[left]{\Huge $\mathsf{Y_{in}}$} -- (-8, -2.25);
+
+	\draw[->, rtl_bus, line width=3] (-6.5, 1.75) -- +(1, 0.0) -- +(1, 0.25) -- (xor1.input 1);
+	\node[circ, fill=red, scale=2, color=brown] at (-4.75, 2.0) (getSignAbs1) {};
+	\draw[->, rtl_bus={\LARGE N}, line width=3, color=brown] (getSignAbs1) -- +(0, -2.25) -- +(4.75,-2.25)node[midway, above, yshift=0.0cm]{\Huge $\mathsf{X_{in}[N]}$} -- +(4.75, -0.95); %extract Sign for two's complement
+	\node[circ, fill=black, scale=2, color=brown] at (-4.75, 1.525) (getSignAbs1XOR) {};
+	\draw[->, line width=3, color=brown] (getSignAbs1XOR) -- (xor1.input 2);
+	\draw[->, line width=3] (xor1.output) -- +(0.7,0);
+
+	\draw[->, rtl_bus, line width=3] (-6.5, -2.25) -- +(1, 0.0) -- +(1, 0.25) -- (xor2.input 1);
+	\node[circ, fill=black, scale=2, color=brown] at (-4.75, -2.0) (getSignAbs2) {};
+	\draw[->, rtl_bus={\LARGE N}, line width=3, color=brown] (getSignAbs2) -- +(0, -2.25) -- +(4.75,-2.25)node[midway, above, yshift=-0cm]{\Huge $\mathsf{Y_{in}[N]}$} -- +(4.75, -0.95); %extract Sign for two's complement
+	\node[circ, fill=black, scale=2, color=brown] at (-4.75, -2.475) (getSignAbs2XOR) {};
+	\draw[->, line width=3, color=brown] (getSignAbs2XOR) -- (xor2.input 2);
+	\draw[->, line width=3] (xor2.output) -- +(0.7,0);
+
+	\draw[->, rtl_bus, line width=3] (0.7, 1.75) -- (muxX-in-1);
+	\draw[->, rtl_bus, line width=3] (0.7, -2.25) -- (muxY-in-1);
+	\draw[->, rtl_bus, line width=3] (-0.25, -6.25) -- (muxZ-in-1) node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
+	\draw[->, rtl_bus, line width=3] (muxX-out) -- (8.25, 1);
+	\draw[->, rtl_bus, line width=3] (muxY-out) -- (8.25, -3);
+	\draw[->, rtl_bus, line width=3] (muxZ-out) -- (8.25, -7);
 
 
-    \draw[->, line width=3] (30.75,1) -- +(0.5, 0) -- +(0.5, 4) -- +(-27.5, 4)node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-27.5, -0.7) -- (muxX-in-2);
-    \draw[->, line width=3] (30.75, -3) -- +(1.5, 0) -- +(1.5, 8.5) -- +(-28.5, 8.5) node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-28.5, -0.7) -- (muxY-in-2);
-    \draw[->, line width=3] (zRegVal) -- (31.5, -5) -- (33.25, -5) -- +(0, 11) -- +(-32, 11)node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-32, -2.7) -- (muxZ-in-2);
+	\draw[->, rtl_bus, line width=3] (9.75, 1) -- (12.2, 1) node[above, midway, yshift=0.2cm]{\sffamily\Huge X};
+	\draw[->, rtl_bus, line width=3] (9.75, -3) -- (12.2, -3) node[above, midway, yshift=0.2cm]{\sffamily\Huge Y};
+	\node[circ, fill=black, scale=2, color=brown] at (10.75, -3) (getSing) {};
+	\draw[->, rtl_bus, line width=3] (9.75, -7) -- (22.25, -7) node[above, midway, yshift=0.2cm]{\sffamily\Huge Z};
+	\draw[->, line width=3, color=brown] (getSing) -- +(0, -2.5) -- +(4.5, -2.5) node[midway, sloped, xshift=0cm] {\LARGE /} node[midway, below, xshift=-0.1cm, yshift=-0.2cm] {\sffamily\LARGE N} node[above, midway, yshift=0.2cm]{\sffamily\Huge Y[N]} -- +(4.5, 3.8) -- (xor3.input 2);
+	\node[circ, fill=black, scale=2, color=brown] at (10.75, -5.5) (getSing2) {};
+	\draw[->, line width=3, color=brown] (getSing2) -- +(0, -5.5) -- +(11.5, -5.5);
 
-    %for quadrant remapping:
-    \node[circ, fill=black, scale=2] at (-5.5, 2) (qadI) {};
-    \draw[->, line width=3] (qadI) -- +(0, 4.5) -- +(39.5, 4.5)node[midway, sloped, xshift=3cm] {\LARGE /} -- +(39.5, -8.125);
-    \node[circ, fill=black, scale=2] at (-6, -2.25) (qadQ) {};
-    \draw[->, line width=3] (qadQ) -- +(0, 9.25) -- +(40.5, 9.25) node[midway, sloped, xshift=3cm] {\LARGE /} -- +(40.5, -3.875);
+	\draw[->, rtl_bus, line width=3] (9.75, -15) -- (22.25, -15) node[above, midway, yshift=0.2cm]{\sffamily\Huge i};
 
-    \node[circ, fill=black, scale=2] at (5, -20) (getI) {};
-    \draw[->, line width=3] (getI) -- +(0, 5) -- (8.25, -15);
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % clk arrows pipeline regs
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \draw[->, dashed] (-9.25, -17.15) -- (-8, -17.15) node[above, midway]{\sffamily\LARGE CLK};
-    \draw[->, dashed] (7, -17.15) -- (8.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
-    \draw[->, dashed] (21, -17.15) -- (22.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
-    \draw[->, dashed] (28, -17.15) -- (29.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
-    \draw[->, dashed] (36, -17.15) -- (37.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, rtl_bus, line width=3] (13.85, 1) -- +(1, 0.0) -- +(1, 0.25) -- (xor3.input 1);
+	\draw[->, line width=3] (xor3.output) -- +(0.7,0);
+	\draw[->, rtl_bus, line width=3] (20.7, 1) -- (22.25, 1);
+	\node[circ, fill=black, scale=2, color=brown] at (15.25, -0.5) (getSignAbs3XOR) {};
+	\draw[->, line width=3, color=brown] (getSignAbs3XOR) -- +(4.75, 0) -- +(4.75, 0.8);
+
+	\draw[->, rtl_bus, line width=3] (13.85, -3) -- +(1, 0.0) -- +(1, 0.25) -- (xor4.input 1);
+	\node[circ, fill=black, scale=2, color=brown] at (15.25, -3.225) (xor4SIGN) {};
+	\draw[->, line width=3, color=brown] (xor4SIGN) -- (xor4.input 2);
+	\draw[->, line width=3] (xor4.output) -- +(0.7,0);
+	\draw[->, rtl_bus, line width=3] (20.7, -3) -- (22.25, -3);
+	\node[circ, fill=black, scale=2, color=brown] at (15.25, -4.5) (getSignAbs4XOR) {};
+	\draw[->, line width=3, color=brown] (getSignAbs4XOR) -- +(4.75, 0) -- +(4.75, 0.8);
+
+	\draw[->, rtl_bus, line width=3] (23.75, 1) -- (26.3, 1);
+	\draw[->, rtl_bus, line width=3] (27.7, 1) -- (29.25, 1);
+	\draw[->, rtl_bus, line width=3] (23.75, -3) -- (25.3, -3);
+	\draw[->, rtl_bus, line width=3] (26.7, -3) -- (29.25, -3);
+	\draw[->, rtl_bus, line width=3] (23.75, -7) -- (26.3, -7);
+	\draw[->, rtl_bus, line width=3] (27.7, -7) -- (29.25, -7);
+	\draw[->, rtl_bus, line width=3] (27, -10.3) -- (27, -7.7);
+	\draw[->, rtl_bus, line width=3] (27, -14.1) -- (27, -11.7) node[midway, left, xshift=-0.1cm]{\Huge $\mathsf{\alpha_i}$} node[midway, right, xshift=0.1cm]{\sffamily\LARGE N};
+	\draw[->, rtl_bus, line width=3, color=brown] (23.75, -11) -- +(2.55, 0);
+	\draw[->, rtl_bus, line width=3] (23.75, -15) -- +(2, 0);
+
+	\node[circ, fill=black, scale=2] at (24.5, 1) (getXISigned) {};
+	\draw[->, line width=3] (getXISigned) -- +(-0, -1.5) -- +(1.5, -1.5) -- +(1.5, -3.3);
+
+	\node[circ, fill=black, scale=2] at (24, -3) (getYISigned) {};
+	\draw[->, line width=3] (getYISigned) -- +(0, 1.5) -- +(3, 1.5) -- +(3, 3.3) node[right, yshift=-0.2cm]{\Huge \textbf{-}};
+
+	\draw[->, line width=3] (30.75, -7) -- (32.25, -7);
+	\node[circ, fill=black, scale=2] at (31.5, -7) (zRegVal) {};
+
+	\draw[->, rtl_bus, line width=3] (35.8, -7) -- (37.25, -7) node[above, midway]{} node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
+	\draw[->, rtl_bus, line width=3] (38.75, -7) -- (41.5, -7) node[midway, right, xshift=1.5cm] {\Huge $\mathsf{\phi}$} node[midway, below, yshift=-0.2cm]{\sffamily\LARGE N};
+
+
+
+	\draw[<-] (39.15, -17.15) -- (40, -17.15) -- +(0, -1.85) -- +(-26.1, -1.85) node[right, above, xshift=2.5cm]{\sffamily\LARGE LATCH OUTPUT};
+	\draw[->, dashed] (15.4, -21) -- (13.9, -21) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, rtl_bus, line width=3] (10.1, -20) node[above, xshift=-1.75cm]{\sffamily\LARGE ITERATION} -- (3.75, -20) node[midway, below, yshift=-0.2cm]{\sffamily\LARGE L};
+
+	%pipeline latch of input vals
+	\draw[->] (3, -19.125) -- +(0, 18) -- +(2, 18) -- (muxX.south);
+	\node[circ] at (3, -5.125) (muxYSELSig) {};
+	\draw[->] (muxYSELSig) -- +(2, 0) -- (muxY.south);
+	\node[circ] at (3, -9.125) (muxZSELSig) {};
+	\draw[->] (muxZSELSig) -- +(2, 0) -- (muxZ.south);
+	\node[circ] at (3, -13.125) (busySig) {};
+	\draw[->] (busySig) -- +(2,0) node[right]{\sffamily\Huge BUSY};
+	\draw[->] (0, -24) node[left]{\sffamily\Huge START}-- +(12, 0) -- +(12, 2.5);
+	\node[circ] at (3, -17.15) (latchInput) {};
+	\draw[->] (latchInput) -- +(-9.1,0);
+
+
+	\draw[->, line width=3] (30.75,1) -- +(0.5, 0) -- +(0.5, 4) -- +(-27.5, 4)node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-27.5, -0.7) -- (muxX-in-2);
+	\draw[->, line width=3] (30.75, -3) -- +(1.5, 0) -- +(1.5, 8.5) -- +(-28.5, 8.5) node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-28.5, -0.7) -- (muxY-in-2);
+	\draw[->, line width=3] (zRegVal) -- (31.5, -5) -- (33.25, -5) -- +(0, 11) -- +(-32, 11)node[midway, sloped, xshift=0cm] {\LARGE /} -- +(-32, -2.7) -- (muxZ-in-2);
+
+	%for quadrant remapping:
+	\node[circ, fill=black, scale=2] at (-5.5, 2) (qadI) {};
+	\draw[->, line width=3] (qadI) -- +(0, 4.5) -- +(39.5, 4.5)node[midway, sloped, xshift=3cm] {\LARGE /} -- +(39.5, -8.125);
+	\node[circ, fill=black, scale=2] at (-6, -2.25) (qadQ) {};
+	\draw[->, line width=3] (qadQ) -- +(0, 9.25) -- +(40.5, 9.25) node[midway, sloped, xshift=3cm] {\LARGE /} -- +(40.5, -3.875);
+
+	\node[circ, fill=black, scale=2] at (5, -20) (getI) {};
+	\draw[->, line width=3] (getI) -- +(0, 5) -- (8.25, -15);
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% clk arrows pipeline regs
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\draw[->, dashed] (-9.25, -17.15) -- (-8, -17.15) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, dashed] (7, -17.15) -- (8.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, dashed] (21, -17.15) -- (22.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, dashed] (28, -17.15) -- (29.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
+	\draw[->, dashed] (36, -17.15) -- (37.25, -17.15) node[above, midway]{\sffamily\LARGE CLK};
 
 \end{circuitikz}
 

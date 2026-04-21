@@ -16,7 +16,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{../simplertl}
+\usepackage{../register-transfer-level}
 \usepackage{lmodern}
 \usepackage[english]{babel}
 \usepackage{xcolor}
@@ -64,7 +64,7 @@
 \addtokomafont{pagenumber}{\color{textCGray}}
 
 \clearpairofpagestyles
-\ihead{\color{textCGray}{\texttt{simpleRTL}}}
+\ihead{\color{textCGray}{\texttt{register-transfer-level}}}
 \chead{\color{main}\headmark}
 \ofoot{\color{textCGray}\pagemark}
 \automark{section}
@@ -141,56 +141,56 @@
 }
 
 \begin{document}
-    \sffamily
-    \begin{titlepage}
-        \centering
-        \vspace*{2cm}
-        {\color{main}\Huge\texttt{\textbf{SimpleRTL}}}\\[0.5cm]
-        {\color{example}\Large publication quality RTL diagrams}\\[4cm]
-        \begin{center}
-            \begin{tikzpicture}[>=Stealth, thick, text=textC, draw=textC]
-                \createMux[rtl_height=3.5cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}}
-                \draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
-                \draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
-                \draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {Input 3};
-                \draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {Input 4};
-                \draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {Input 5};
-                \draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {Input 6};
-                \draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {Input 7};
-                \draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {Input 8};
-                \draw[->] (muxTitle-out) -- ++(1, 0) node[right] {Output};
-                \draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm]{Sel} -- +(-1.5, -1)  (muxTitle-sel);
-            \end{tikzpicture}
-        \end{center}
-        \vspace*{2cm}
-        {\color{textC}\large Lukas Rumpel}\\[0.2cm]
-        {\color{textCGray}2026} \\[0.2cm]
-        {\color{textCGray}under LPPL-1.3 license}
-    \end{titlepage}
+\sffamily
+\begin{titlepage}
+	\centering
+	\vspace*{2cm}
+	{\color{main}\Huge\texttt{\textbf{register-transfer-level}}}\\[0.5cm]
+	{\color{example}\Large publication quality RTL diagrams}\\[4cm]
+	\begin{center}
+		\begin{tikzpicture}[>=Stealth, thick, text=textC, draw=textC]
+			\createMux[rtl_height=3.5cm]{muxTitle}(0,0){{\Large 000}, {\Large 001}, {\Large 010}, {\Large 011}, {\Large 100}, {\Large 101}, {\Large 110}, {\Large 111}}
+			\draw[<-] (muxTitle-in-1) -- ++(-1, 0) node[left] {Input 1};
+			\draw[<-] (muxTitle-in-2) -- ++(-1, 0) node[left] {Input 2};
+			\draw[<-] (muxTitle-in-3) -- ++(-1, 0) node[left] {Input 3};
+			\draw[<-] (muxTitle-in-4) -- ++(-1, 0) node[left] {Input 4};
+			\draw[<-] (muxTitle-in-5) -- ++(-1, 0) node[left] {Input 5};
+			\draw[<-] (muxTitle-in-6) -- ++(-1, 0) node[left] {Input 6};
+			\draw[<-] (muxTitle-in-7) -- ++(-1, 0) node[left] {Input 7};
+			\draw[<-] (muxTitle-in-8) -- ++(-1, 0) node[left] {Input 8};
+			\draw[->] (muxTitle-out) -- ++(1, 0) node[right] {Output};
+			\draw[->, rtl_bus={3}, line width=2] ($(muxTitle-sel)$) -- +(0,-1) node[right, font=\small, yshift=0.5cm]{Sel} -- +(-1.5, -1)  (muxTitle-sel);
+		\end{tikzpicture}
+	\end{center}
+	\vspace*{2cm}
+	{\color{textC}\large Lukas Rumpel}\\[0.2cm]
+	{\color{textCGray}2026} \\[0.2cm]
+	{\color{textCGray}under LPPL-1.3 license}
+\end{titlepage}
 
-    \newpage\thispagestyle{empty}\null 
+\newpage\thispagestyle{empty}\null
 
 
-    \clearpage
-    \pagenumbering{Roman}
-    \setcounter{page}{3}
+\clearpage
+\pagenumbering{Roman}
+\setcounter{page}{3}
 
-    \tableofcontents 
+\tableofcontents
 
-    \cleardoublepage
-    \newcounter{savepage}
-    \setcounter{savepage}{\value{page}}
-    \pagenumbering{arabic}
-    \setcounter{page}{\value{savepage}}
-    \setcounter{section}{0}
-    \setcounter{table}{0} 
-    \setcounter{figure}{0}
+\cleardoublepage
+\newcounter{savepage}
+\setcounter{savepage}{\value{page}}
+\pagenumbering{arabic}
+\setcounter{page}{\value{savepage}}
+\setcounter{section}{0}
+\setcounter{table}{0}
+\setcounter{figure}{0}
 
-    \include{chapters/Introduction}
-    \include{chapters/Memories}
-    \include{chapters/Structural}
-    \include{chapters/Combinatorial}
-    \include{chapters/Operators}
-    \include{chapters/Signals_Routing_Manipulation}
-    \include{chapters/Examples}
+\include{chapters/Introduction}
+\include{chapters/Memories}
+\include{chapters/Structural}
+\include{chapters/Combinatorial}
+\include{chapters/Operators}
+\include{chapters/Signals_Routing_Manipulation}
+\include{chapters/Examples}
 \end{document}

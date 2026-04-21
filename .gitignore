@@ -1,1 +1,9 @@
-*.zip
+*
+
+!*/ 
+
+!.gitignore
+!*.tex 
+!*.md
+!*.pdf
+!*.sty

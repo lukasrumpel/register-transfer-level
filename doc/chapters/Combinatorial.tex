@@ -4,7 +4,7 @@
 \subsection{\sffamily Multiplexers and Demultiplexers}
 
     \subsubsection{\sffamily Description}
-        Multiplexers and Demultiplexers are the primary steering elements for data paths. In \texttt{SimpleRTL}, these are not simple nodes but are generated via the \texttt{\textbackslash createMux} and \texttt{\textbackslash createDemux} commands. 
+        Multiplexers and Demultiplexers are the primary steering elements for data paths. In \texttt{register-transfer-level}, these are not simple nodes but are generated via the \texttt{\textbackslash createMux} and \texttt{\textbackslash createDemux} commands. 
         
         These commands automatically calculate the vertical distribution of ports based on the number of labels provided. Multiplexers (yellow-tinted trapezoids) converge multiple inputs into one output, while Demultiplexers diverge a single input into multiple outputs. Both elements feature a dedicated selection (\texttt{sel}) anchor at the bottom.
 
