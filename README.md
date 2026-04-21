@@ -1,7 +1,7 @@
 # register-transfer-level: Publication-Quality RTL Diagrams in TikZ
 
 <p align="center">
-  <img src="examples/8_1_MUX/8_1_MUX.svg" width="200" alt="register-transfer-level Architecture Preview">
+  <img src="register-transfer-level/examples/8_1_MUX/8_1_MUX.svg" width="200" alt="register-transfer-level Architecture Preview">
 </p>
 
 <p align="center">
