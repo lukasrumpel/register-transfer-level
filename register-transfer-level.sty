@@ -16,8 +16,8 @@
 %%
 %% The Current Maintainer of this work is Lukas Rumpel. 
 %%
-%% This work consists of the files simpertl.sty and simpertl.tex
-%% and the derived file simpertl.pdf.
+%% This work consists of the files register-transfer-level.sty,
+%% register-transfer-level.tex and the derived file register-transfer-level.pdf.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -87,11 +87,11 @@
 			minimum width=1.2cm,
 			rtl_has_clock,
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
-					($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
-					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
+					($(\regtrans@savednode.north west)!0.15!(\regtrans@savednode.south west)$) coordinate (\regtrans@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
+					($(\regtrans@savednode.south west)!0.2!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\regtrans@savednode.north east)!0.15!(\regtrans@savednode.south east)$) coordinate (\regtrans@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,12 +102,12 @@
 			minimum width=1.2cm,
 			rtl_has_clock,
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
-					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
-					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
-					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
+					($(\regtrans@savednode.north west)!0.15!(\regtrans@savednode.south west)$) coordinate (\regtrans@savednode-D) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {D}
+					($(\regtrans@savednode.south west)!0.15!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\regtrans@savednode.north east)!0.15!(\regtrans@savednode.south east)$) coordinate (\regtrans@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\regtrans@savednode.south east)!0.15!(\regtrans@savednode.north east)$) coordinate (\regtrans@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -117,12 +117,12 @@
 			rtl_base_box,
 			minimum width=1.2cm,
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-S) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {S}
-					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-R) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {R}
-					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
-					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
+					($(\regtrans@savednode.north west)!0.15!(\regtrans@savednode.south west)$) coordinate (\regtrans@savednode-S) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {S}
+					($(\regtrans@savednode.south west)!0.15!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-R) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {R}
+					($(\regtrans@savednode.north east)!0.15!(\regtrans@savednode.south east)$) coordinate (\regtrans@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\regtrans@savednode.south east)!0.15!(\regtrans@savednode.north east)$) coordinate (\regtrans@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -133,13 +133,13 @@
 			minimum width=1.2cm,
 			rtl_has_clock_middle,
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-					($(\simplertl@savednode.north west)!0.15!(\simplertl@savednode.south west)$) coordinate (\simplertl@savednode-J) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {J}
-					($(\simplertl@savednode.west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
-					($(\simplertl@savednode.south west)!0.15!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-K) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {K}
-					($(\simplertl@savednode.north east)!0.15!(\simplertl@savednode.south east)$) coordinate (\simplertl@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
-					($(\simplertl@savednode.south east)!0.15!(\simplertl@savednode.north east)$) coordinate (\simplertl@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
+					($(\regtrans@savednode.north west)!0.15!(\regtrans@savednode.south west)$) coordinate (\regtrans@savednode-J) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {J}
+					($(\regtrans@savednode.west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					($(\regtrans@savednode.south west)!0.15!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-K) node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] {K}
+					($(\regtrans@savednode.north east)!0.15!(\regtrans@savednode.south east)$) coordinate (\regtrans@savednode-Q) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {Q}
+					($(\regtrans@savednode.south east)!0.15!(\regtrans@savednode.north east)$) coordinate (\regtrans@savednode-Qbar) node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] {$\mathsf{\overline{Q}}$}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -149,9 +149,9 @@
 			rtl_base_box,
 			rtl_has_clock,
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
-					($(\simplertl@savednode.south west)!0.2!(\simplertl@savednode.north west)$) coordinate (\simplertl@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
+					($(\regtrans@savednode.south west)!0.2!(\regtrans@savednode.north west)$) coordinate (\regtrans@savednode-CLK) node[anchor=east, inner sep=0pt, xshift=2pt] {}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		},
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -319,15 +319,15 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	is_cutset/.style={
 			append after command={
-					\pgfextra{\edef\simplertl@savednode{\tikzlastnode}}
+					\pgfextra{\edef\regtrans@savednode{\tikzlastnode}}
 					\pgfextra{
 						\begin{pgfonlayer}{foreground}
 							\draw[#1, dashed, thick]
-							($(\simplertl@savednode.north)!-0.05!(\simplertl@savednode.south)$)--
-							($(\simplertl@savednode.south)!-0.05!(\simplertl@savednode.north)$);
+							($(\regtrans@savednode.north)!-0.05!(\regtrans@savednode.south)$)--
+							($(\regtrans@savednode.south)!-0.05!(\regtrans@savednode.north)$);
 						\end{pgfonlayer}
 					}
-					\pgfextra{\xdef\tikzlastnode{\simplertl@savednode}}
+					\pgfextra{\xdef\tikzlastnode{\regtrans@savednode}}
 				}
 		}
 }
@@ -347,12 +347,12 @@
 		\node[rtl_mux, #1] at (#3) (#2) {\rotatebox{-90}{ }};
 	}
 
-	\foreach \dummy [count=\n] in {#4} { \global\let\simplertl@inputcount\n }
+	\foreach \dummy [count=\n] in {#4} { \global\let\regtrans@inputcount\n }
 	\foreach \lbl [count=\i] in {#4} {
-			\ifnum\simplertl@inputcount=1
+			\ifnum\regtrans@inputcount=1
 				\pgfmathsetmacro{\pos}{0.5}
 			\else
-				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\simplertl@inputcount-1) ) * 1.2 }
+				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\regtrans@inputcount-1) ) * 1.2 }
 			\fi
 			\coordinate (#2-in-\i) at ($(#2.north west)!\pos!(#2.south west)$);
 			\node[font=\sffamily\large, anchor=west, inner sep=0pt, xshift=2pt] at (#2-in-\i) {\lbl};
@@ -376,12 +376,12 @@
 		\node[rtl_demux, #1] at (#3) (#2) {\rotatebox{90}{ }};
 	}
 
-	\foreach \dummy [count=\n] in {#4} { \global\let\simplertl@outputcount\n }
+	\foreach \dummy [count=\n] in {#4} { \global\let\regtrans@outputcount\n }
 	\foreach \lbl [count=\i] in {#4} {
-			\ifnum\simplertl@outputcount=1
+			\ifnum\regtrans@outputcount=1
 				\pgfmathsetmacro{\pos}{0.5}
 			\else
-				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\simplertl@outputcount-1) ) * 1.2 }
+				\pgfmathsetmacro{\pos}{(-0.1 + (\i-1) / (\regtrans@outputcount-1) ) * 1.2 }
 			\fi
 			\coordinate (#2-out-\i) at ($(#2.north east)!\pos!(#2.south east)$);
 			\node[font=\sffamily\large, anchor=east, inner sep=0pt, xshift=-2pt] at (#2-out-\i) {\lbl};
