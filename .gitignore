@@ -1,11 +1,14 @@
 *
 
-!*/ 
+!*/
+
+register-transfer-level
 
 !.gitignore
-!*.tex 
+!*.tex
 !*.md
 !*.pdf
 !*.sty
 !LICENSE
 !*.svg
+!*.sh

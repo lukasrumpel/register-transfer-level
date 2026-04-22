@@ -1,0 +1,27 @@
+#!/bin/bash
+
+PKG_NAME="register-transfer-level"
+ZIP_NAME="${PKG_NAME}.zip"
+
+echo "--- Starte Bereinigung ---"
+
+find . -maxdepth 1 -type f \
+    ! -name "*.tex" \
+    ! -name "*.md" \
+    ! -name "*.pdf" \
+    ! -name "*.sty" \
+    ! -name "LICENSE" \
+    ! -name ".gitignore" \
+    ! -name "packCTAN.sh" \
+    -delete
+
+echo "--- Erstelle CTAN-Struktur ---"
+
+rm -rf "$PKG_NAME"
+rm -f "$ZIP_NAME"
+
+mkdir -p "$PKG_NAME"
+
+cp -r *.tex *.md *.pdf *.sty LICENSE .gitignore doc examples "$PKG_NAME/" 2>/dev/null
+
+zip -r "$ZIP_NAME" "$PKG_NAME/"
