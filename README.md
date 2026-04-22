@@ -10,6 +10,8 @@ Maintainer: Lukas Rumpel
 
 Licence: LPPL-1.3c
 
+Contact: https://github.com/lukasrumpel/register-transfer-level
+
 ---
 
 At the time of this package's creation, no easy-to-use TikZ package existed for generating high-quality, publication-ready RTL diagrams. While RTL diagrams can certainly be drawn using standard TikZ or circuitikz elements, anyone who has attempted this can confirm that it is a tedious and highly inconvenient process.
