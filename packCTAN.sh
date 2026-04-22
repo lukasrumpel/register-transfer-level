@@ -5,13 +5,14 @@ ZIP_NAME="${PKG_NAME}.zip"
 
 echo "--- Starte Bereinigung ---"
 
-find . -maxdepth 1 -type f \
+find . -type f \
     ! -name "*.tex" \
     ! -name "*.md" \
     ! -name "*.pdf" \
     ! -name "*.sty" \
     ! -name "LICENSE" \
     ! -name ".gitignore" \
+    ! .name ".git" \
     ! -name "packCTAN.sh" \
     -delete
 
