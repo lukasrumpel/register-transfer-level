@@ -8,6 +8,7 @@ find . -type f \
     ! -name "*.md" \
     ! -name "*.pdf" \
     ! -name "*.sty" \
+    ! -name "*.svg" \
     ! -name "LICENSE" \
     ! -name ".gitignore" \
     ! .name ".git" \
