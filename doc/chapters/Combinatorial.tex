@@ -32,27 +32,35 @@
             \item \textbf{DEMUX Outputs}: \texttt{\{name\}-out-1} to \texttt{\{name\}-out-n}.
             \item \textbf{Common}: \texttt{\{name\}-sel} (bottom), \texttt{\{name\}-out} (MUX) or \texttt{\{name\}-in} (DEMUX).
         \end{itemize}
-
+        
     \subsubsection{\sffamily Listing}
-\begin{RTLexample}[MUX and DEMUX]
-\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
-    % 4-to-1 MUX
-    \createMux[rtl_mux_width=3cm]{M1}(0,0){00, 01, 10, 11}
-    \draw[<-, rtl_bus={}] (M1-sel) -- ++(0,-1.6) node[below] {sel};
-    \draw[->] (M1-out) -- ++(0.8,0) node[right] {Y};
-    \foreach \anchor/\label/\xshift/\yshift in {1/in\_1/-1/0, 2/in\_2/-1/0, 3/in\_3/-1/0, 4/in\_4/-1/0} {
-        \draw[<-] (M1-in-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
+        \begin{RTLexample}[4-to-1 Multiplexer]
+            \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
 
-    % 1-to-2 DEMUX
-    \createDemux[rtl_mux_width=2cm]{D1}(8.5,0){A, B}
-    \draw[<-] (D1-in) -- ++(-0.8,0) node[left] {X};
-    \draw[<-, rtl_bus={}] (D1-sel) -- ++(0,-1.6) node[below] {sel};
-    \foreach \anchor/\label/\xshift/\yshift in {1/out\_1/1.3/0, 2/out\_2/1.3/0} {
-        \draw[<-] (D1-out-\anchor) -- ++(\xshift, \yshift) node[pos=1.5] {\label};
-    }
-\end{tikzpicture}
-\end{RTLexample}
+                \createMux[rtl_mux_width=3cm]{M1}(0,0){00, 01, 10, 11}
+    
+                \draw[<-, rtl_bus={}] (M1-sel) -- ++(0,-1.2) node[below] {sel};
+                \draw[->] (M1-out) -- ++(0.8,0) node[right] {Y};
+    
+                \foreach \i/\lbl in {1/in\_1, 2/in\_2, 3/in\_3, 4/in\_4} {
+                    \draw[<-] (M1-in-\i) -- ++(-0.8,0) node[left] {\lbl};
+                }
+            \end{tikzpicture}
+        \end{RTLexample}
+
+        \begin{RTLexample}[1-to-2 Demultiplexer]
+            \begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+
+                \createDemux[rtl_mux_width=2cm]{D1}(0,0){A, B}
+    
+                \draw[<-] (D1-in) -- ++(-0.8,0) node[left] {X};
+                \draw[<-, rtl_bus={}] (D1-sel) -- ++(0,-1.2) node[below] {sel};
+    
+                \foreach \i/\lbl in {1/out\_1, 2/out\_2} {
+                    \draw[->] (D1-out-\i) -- ++(0.8,0) node[right] {\lbl};
+                }
+            \end{tikzpicture}
+        \end{RTLexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\sffamily Tri-State Buffer}

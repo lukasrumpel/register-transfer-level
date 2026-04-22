@@ -21,7 +21,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{register-transfer-level}[2026 v1.0 Custom RTL TikZ Library]
+\ProvidesPackage{register-transfer-level}[2026 v1.1 Custom RTL TikZ Library]
 
 \RequirePackage[european]{circuitikz}
 \RequirePackage{graphicx}
@@ -430,16 +430,16 @@
 % #6 {}             : Height of the level
 % #7 {}             : Path to external PDF/Image
 \NewDocumentCommand{\createHierLevel}{ O{} m m m m m m }{
-    \node[draw, dashed, circle, gray, inner sep=4pt, fit=(#2)] (#2-focus) {};
-    
-    \node[rtl_reg, rtl_width=#5, rtl_height=#6, inner sep=0pt, gray!4] (#4) at #3 {%
-        \includegraphics[width=#5, height=#6]{#7}%
-    };
-    
-    \begin{pgfonlayer}{background}
-        \draw[dashed, gray!75, #1] (#2-focus.north east) -- (#4.north west);
-        \draw[dashed, gray!75, #1] (#2-focus.south east) -- (#4.south west);
-    \end{pgfonlayer}
+	\node[draw, dashed, circle, gray, inner sep=4pt, fit=(#2)] (#2-focus) {};
+
+	\node[rtl_reg, rtl_width=#5, rtl_height=#6, inner sep=0pt, gray!4] (#4) at #3 {%
+		\includegraphics[width=#5, height=#6]{#7}%
+	};
+
+	\begin{pgfonlayer}{background}
+		\draw[dashed, gray!75, #1] (#2-focus.north east) -- (#4.north west);
+		\draw[dashed, gray!75, #1] (#2-focus.south east) -- (#4.south west);
+	\end{pgfonlayer}
 }
 
 
