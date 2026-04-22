@@ -29,7 +29,10 @@
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{main,foreground}
 
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, decorations.markings, fit, backgrounds}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
 
 \tikzset{
 	rtl_width/.style={
@@ -409,10 +412,35 @@
 % #1 []             : Style Arguments
 % #2 {}             : Start
 % #3 {}             : Inititial Space (x)
-% #3 {}             : Height of Arc (y)
-% #4 {}             : Destination
+% #4 {}             : Height of Arc (y)
+% #5 {}             : Destination
 \NewDocumentCommand{\routeU}{ O{} m m m m }{
 	\draw[#1] (#2) -- ++(#3, 0) -- ++(0, #4) -| ($(#5)-(#3, 0)$) -- (#5)
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% create hierarchical level
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% creates a hierarchical schematic level
+% #1 []             : Style Arguments for lines (optional)
+% #2 {}             : Start node
+% #3 {}             : Target coordinate
+% #4 {}             : Reference name for the new container
+% #5 {}             : Width of the level
+% #6 {}             : Height of the level
+% #7 {}             : Path to external PDF/Image
+\NewDocumentCommand{\createHierLevel}{ O{} m m m m m m }{
+    \node[draw, dashed, circle, gray, inner sep=4pt, fit=(#2)] (#2-focus) {};
+    
+    \node[rtl_reg, rtl_width=#5, rtl_height=#6, inner sep=0pt, gray!4] (#4) at #3 {%
+        \includegraphics[width=#5, height=#6]{#7}%
+    };
+    
+    \begin{pgfonlayer}{background}
+        \draw[dashed, gray!75, #1] (#2-focus.north east) -- (#4.north west);
+        \draw[dashed, gray!75, #1] (#2-focus.south east) -- (#4.south west);
+    \end{pgfonlayer}
+}
+
 
 \endinput

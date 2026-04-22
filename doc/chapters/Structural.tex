@@ -129,3 +129,48 @@
 \end{tikzpicture}
 \end{RTLexample}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\sffamily Hierarchical Levels}
+
+    \subsubsection{\sffamily Description}
+        Complex digital systems, such as SOC architectures or multi-stage DSP pipelines, etc., often require a hierarchical representation to remain readable. The \texttt{\textbackslash createHierLevel} command is designed to automate the "zoom-in" effect from a high-level block to a detailed schematic. 
+        
+        It automatically draws a focal marker (dashed circle) around the source component, creates a large container at a target position, and pulls projection lines on the \texttt{background} layer to visualize the transition. This command is specifically optimized to include external PDF schematics, allowing for a modular documentation workflow.
+
+    \subsubsection{\sffamily Attributes}
+        The command utilizes a mix of positional and mandatory arguments to define the geometric relationship between the hierarchy levels:
+
+    \begin{center}
+        \begin{tabular}{lp{8cm}}
+        \toprule
+            \textbf{Argument} & \textbf{Effect} \\
+            \midrule
+            \texttt{[\#1]} & Optional TikZ draw options for the projection lines (e.g., color, dash pattern). \\
+            \texttt{\{\#2\}} & Name of the source node in the overview (e.g., \texttt{DSP\_Core}). \\
+            \texttt{\{\#3\}} & Target coordinate for the center of the detail view (e.g., \texttt{(10,-5)}). \\
+            \texttt{\{\#4\}} & Reference name for the new detail container. \\
+            \texttt{\{\#5\}} & Width of the detail container. \\
+            \texttt{\{\#6\}} & Height of the detail container. \\
+            \texttt{\{\#7\}} & File path to the external PDF or image. \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    \subsubsection{\sffamily Anchors}
+        The created detail container behaves like a standard \texttt{rtl\_reg} node:
+        \begin{itemize}
+            \item \textbf{Standard Anchors}: \texttt{north}, \texttt{south}, \texttt{east}, \texttt{west}, etc. These can be used to connect global signals to the zoomed-in schematic.
+        \end{itemize}
+
+    \subsubsection{\sffamily Listing}
+        The following example demonstrates a zoom-in from a generic DSP block to a specific 8-to-1 Multiplexer implementation.
+
+\begin{RTLexample}[Hierarchical Level]
+\begin{tikzpicture}[>=Stealth, thick, scale=0.8]
+    \node[rtl_module] (Core) at (0,0) {Module};
+
+    \createHierLevel{Core}{(12,-4)}{DetailView}{8cm}{7cm}{../examples/8_1_MUX/8_1_MUX.pdf};
+
+\end{tikzpicture}
+\end{RTLexample}
