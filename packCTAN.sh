@@ -15,8 +15,6 @@ find . -maxdepth 1 -type f \
     ! -name "packCTAN.sh" \
     -delete
 
-echo "--- Erstelle CTAN-Struktur ---"
-
 rm -rf "$PKG_NAME"
 rm -f "$ZIP_NAME"
 
