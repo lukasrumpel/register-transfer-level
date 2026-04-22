@@ -3,8 +3,6 @@
 PKG_NAME="register-transfer-level"
 ZIP_NAME="${PKG_NAME}.zip"
 
-echo "--- Starte Bereinigung ---"
-
 find . -type f \
     ! -name "*.tex" \
     ! -name "*.md" \
